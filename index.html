@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Billcorn — billing made beautiful. Smart invoicing, inventory, and effortless shop management." />
+  <meta name="theme-color" content="#f6f7f7" />
+  <title>Billcorn — The Power of Simplicity</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --text:#101828;
+      --muted:#667085;
+
+      --green:#35b36f;
+      --green2:#2aa86b;
+      --green-dark:#1b8f52;
+
+      --glass: rgba(255,255,255,.78);
+      --glass2: rgba(255,255,255,.70);
+
+      --shadow: 0 18px 45px rgba(16,24,40,.12);
+      --shadow-soft: 0 10px 24px rgba(16,24,40,.10);
+
+      --radius-xl: 26px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+
+      --menu-border:#5b7cff;
+
+      --container: 1120px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:"Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: linear-gradient(180deg, #eef3f2 0%, #f6f7f7 45%, #f3f4f6 100%);
+    }
+    a{ color:inherit; }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+    }
+
+    /* Page + soft blobs */
+    .page{
+      min-height:100vh;
+      position:relative;
+      overflow:hidden;
+      padding: clamp(10px, 2vw, 22px);
+    }
+    .page::before{
+      content:"";
+      position:absolute;
+      inset:-160px -160px auto -160px;
+      height: 680px;
+      background:
+        radial-gradient(260px 260px at 20% 28%, rgba(255,214,140,.72), rgba(255,214,140,0) 62%),
+        radial-gradient(320px 320px at 74% 22%, rgba(146,224,182,.70), rgba(146,224,182,0) 62%),
+        radial-gradient(360px 360px at 55% 68%, rgba(255,167,190,.55), rgba(255,167,190,0) 66%);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .wrap{
+      position:relative;
+      z-index:1;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Surface */
+    .app{
+      width:100%;
+      background: rgba(244,245,244,.92);
+      border-radius: clamp(0px, 2vw, 22px);
+      overflow:hidden;
+    }
+    @media (min-width: 760px){
+      .app{
+        background: rgba(244,245,244,.86);
+        box-shadow: 0 26px 60px rgba(16,24,40,.10);
+        border: 1px solid rgba(16,24,40,.06);
+      }
+    }
+
+    .content{
+      padding: 16px 16px 26px;
+    }
+    @media (min-width: 760px){
+      .content{ padding: 18px 22px 28px; }
+    }
+    @media (min-width: 1024px){
+      .content{ padding: 20px 28px 34px; }
+    }
+
+    /* Header */
+    .topbar{
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(16,24,40,.06);
+      border-radius: 999px;
+      padding: 10px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(16,24,40,.08);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:.2px;
+      text-decoration:none;
+      white-space:nowrap;
+    }
+    .brand img{ width:40px;height:40px; display:block; }
+    .brand span{ font-size: 15px; }
+
+    /* Desktop nav (no menu button) */
+    .nav{
+      display:none;
+      align-items:center;
+      gap: 18px;
+      margin: 0 auto;
+    }
+    .nav a{
+      text-decoration:none;
+      font-weight:800;
+      font-size: 13px;
+      color: rgba(16,24,40,.62);
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+    .nav a:hover{ background: rgba(255,255,255,.55); }
+
+    .header-actions{
+      display:none;
+      align-items:center;
+      gap: 10px;
+      white-space:nowrap;
+    }
+
+    @media (min-width: 1024px){
+      .nav{ display:flex; }
+      .header-actions{ display:flex; }
+    }
+
+    /* Mobile menu button (hidden on desktop) */
+    .menu-btn{
+      width: 40px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid rgba(16,24,40,.08);
+      background: rgba(255,255,255,.85);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+      flex: 0 0 auto;
+    }
+    .menu-btn:active{ transform: scale(.98); }
+    @media (min-width: 1024px){
+      .menu-btn{ display:none; }
+    }
+
+    /* Buttons */
+    .btn{
+      height: 44px;
+      border-radius: 999px;
+      border: 0;
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: .2px;
+      transition: transform .12s ease, box-shadow .12s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      padding: 0 16px;
+      text-decoration:none;
+      user-select:none;
+    }
+    .btn:active{ transform: scale(.99); }
+
+    .btn-primary{
+      background: linear-gradient(180deg, #46c782 0%, #2aa86b 100%);
+      color:#fff;
+      box-shadow: 0 14px 26px rgba(42,168,107,.26);
+    }
+    .btn-secondary{
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(16,24,40,.08);
+      color: rgba(16,24,40,.82);
+      box-shadow: 0 10px 20px rgba(16,24,40,.08);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Hero */
+    .hero{
+      padding: 18px 6px 6px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      align-items:center;
+    }
+    @media (min-width: 960px){
+      .hero-grid{
+        grid-template-columns: 1.05fr .95fr;
+        gap: 24px;
+        padding: 10px 4px 0;
+      }
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(16,24,40,.06);
+      color:#2f855a;
+      font-weight:900;
+      font-size:11px;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      backdrop-filter: blur(10px);
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:#5bd08f;
+      box-shadow:0 0 0 4px rgba(91,208,143,.18);
+    }
+
+    h1{
+      margin: 12px 0 10px;
+      font-size: clamp(32px, 5vw, 46px);
+      line-height:1.05;
+      letter-spacing:-1.15px;
+      font-weight: 900;
+    }
+    .accent{
+      background: linear-gradient(90deg, #44c07c 0%, #2aa86b 45%, #2aa86b 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .lead{
+      margin: 0 0 14px;
+      max-width: 420px;
+      color: rgba(16,24,40,.72);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      width: min(340px, 100%);
+    }
+    @media (min-width: 560px){
+      .hero-actions{ flex-direction:row; width:auto; }
+      .hero-actions .btn{ min-width: 160px; }
+    }
+
+    /* Rainbow activity */
+    .rainbow{
+      width: min(440px, 100%);
+      height: 160px;
+      border-radius: 28px;
+      padding: 12px;
+      background:
+        linear-gradient(135deg,
+          rgba(60,231,170,.95) 0%,
+          rgba(255,214,94,.95) 22%,
+          rgba(255,120,148,.95) 45%,
+          rgba(144,129,255,.95) 70%,
+          rgba(88,240,204,.95) 100%);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
+      justify-self:center;
+    }
+    .rainbow::after{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(600px 240px at 30% 20%, rgba(255,255,255,.18), rgba(255,255,255,0) 60%);
+      pointer-events:none;
+    }
+
+    .activity{
+      position:absolute;
+      left:14px; right:14px; bottom:14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(16,24,40,.08);
+      padding: 10px 12px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      box-shadow: 0 14px 26px rgba(16,24,40,.12);
+      backdrop-filter: blur(12px);
+    }
+    .activity .pill{
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.55px;
+      color: rgba(16,24,40,.65);
+    }
+    .bill{ flex:1; min-width:0; }
+    .bill .title{
+      font-weight:900;
+      font-size:12px;
+      margin-top:4px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .bill .sub{
+      color: rgba(16,24,40,.55);
+      font-size:11px;
+      margin-top:2px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .amount{
+      font-weight:900;
+      font-size:12px;
+      color: var(--green-dark);
+      white-space:nowrap;
+    }
+    .icon-chip{
+      width:30px;height:30px;border-radius:10px;
+      background: rgba(53,179,111,.14);
+      border: 1px solid rgba(53,179,111,.18);
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+    }
+
+    /* Sections */
+    .anchor{ scroll-margin-top: 100px; }
+    html{ scroll-behavior:smooth; }
+
+    .section-title{
+      margin: 18px 0 6px;
+      font-weight: 900;
+      letter-spacing: -.6px;
+      font-size: clamp(22px, 3vw, 28px);
+    }
+    .section-sub{
+      margin:0 0 14px;
+      color: rgba(16,24,40,.60);
+      font-size: 12.5px;
+      line-height: 1.55;
+      max-width: 720px;
+    }
+
+    .features-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 760px){
+      .features-grid{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .feature{
+      background: var(--glass);
+      border: 1px solid rgba(16,24,40,.08);
+      border-radius: 22px;
+      padding: 14px;
+      box-shadow: 0 10px 22px rgba(16,24,40,.08);
+      backdrop-filter: blur(10px);
+    }
+    .feature .mock{
+      height: 120px;
+      border-radius: 18px;
+      border: 1px solid rgba(16,24,40,.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position: relative;
+      overflow:hidden;
+    }
+    .mock.blue{
+      background:
+        radial-gradient(160px 120px at 22% 28%, rgba(94,173,255,.28), rgba(94,173,255,0) 60%),
+        radial-gradient(220px 160px at 70% 60%, rgba(201,222,255,.42), rgba(201,222,255,0) 62%),
+        linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.35));
+    }
+    .mock.yellow{
+      background:
+        radial-gradient(220px 180px at 30% 30%, rgba(255,224,121,.45), rgba(255,224,121,0) 62%),
+        radial-gradient(220px 180px at 70% 60%, rgba(146,224,182,.36), rgba(146,224,182,0) 62%),
+        linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.35));
+    }
+
+    .chip-btn{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(53,179,111,.95);
+      color:#fff;
+      font-weight:900;
+      font-size:12px;
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 12px 22px rgba(42,168,107,.26);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .chip-icon{
+      width:30px;height:26px;
+      border-radius:24px;
+      background: rgba(255,255,255,.22);
+      border: 1px solid rgba(255,255,255,.30);
+      display:grid;
+      place-items:center;
+    }
+
+    .mini-icon{
+      width:44px;height:44px;border-radius:999px;
+      background: rgba(53,179,111,.12);
+      border: 1px solid rgba(53,179,111,.18);
+      display:grid;place-items:center;
+    }
+
+    .feature h3{
+      margin: 12px 0 6px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: -.2px;
+    }
+    .feature p{
+      margin:0;
+      color: rgba(16,24,40,.62);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    /* CTA block */
+    .cta{
+      margin: 16px 0 10px;
+      background: linear-gradient(180deg, #2a2f37 0%, #14181f 100%);
+      color:#fff;
+      border-radius: 24px;
+      padding: 18px 16px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+      position:relative;
+      overflow:hidden;
+      text-align:center;
+    }
+    .cta::before{
+      content:"";
+      position:absolute;
+      inset:-30% -30%;
+      background:
+        radial-gradient(260px 200px at 25% 20%, rgba(53,179,111,.28), rgba(53,179,111,0) 60%),
+        radial-gradient(300px 240px at 75% 80%, rgba(255,214,121,.22), rgba(255,214,121,0) 62%);
+      pointer-events:none;
+    }
+    .cta-inner{ position:relative; z-index:1; }
+    .cta h2{
+      margin:0 0 6px;
+      font-size: clamp(20px, 2.8vw, 24px);
+      font-weight: 900;
+      letter-spacing: -.5px;
+    }
+
+    /* Footer */
+    footer{
+      text-align:center;
+      padding: 14px 6px 24px;
+      color: rgba(16,24,40,.55);
+    }
+    .foot-brand{
+      font-weight: 900;
+      color: rgba(16,24,40,.88);
+    }
+    .foot-links{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      font-size:12px;
+      margin: 10px 0 10px;
+      flex-wrap:wrap;
+    }
+    .foot-links a{
+      color: rgba(16,24,40,.58);
+      text-decoration:none;
+      font-weight: 800;
+    }
+    .social{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      margin-top:10px;
+    }
+    .social a{
+      width:32px;height:32px;border-radius:999px;
+      display:grid;place-items:center;
+      border: 1px solid rgba(16,24,40,.10);
+      background: rgba(255,255,255,.7);
+      text-decoration:none;
+    }
+
+    /* ---------- Mobile Menu Overlay (only for <1024px) ---------- */
+    .menu-overlay{
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 50;
+    }
+    .menu-overlay.active{ display:block; }
+
+    .menu-backdrop{
+      position:absolute;
+      inset:0;
+      background: rgba(255,255,255,.65);
+      backdrop-filter: blur(12px);
+    }
+
+    .menu-sheet{
+      position:absolute;
+      inset: 0;
+      transform: translateX(100%);
+      transition: transform .22s ease;
+      background:
+        radial-gradient(260px 220px at 30% 20%, rgba(94,173,255,.14), rgba(94,173,255,0) 60%),
+        radial-gradient(280px 240px at 70% 50%, rgba(255,214,121,.14), rgba(255,214,121,0) 62%),
+        radial-gradient(280px 240px at 50% 80%, rgba(146,224,182,.14), rgba(146,224,182,0) 62%),
+        #fbfbfc;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+    .menu-overlay.active .menu-sheet{ transform: translateX(0); }
+
+    @media (min-width: 1024px){
+      .menu-overlay{ display:none !important; }
+    }
+
+    body.menu-open .app{
+      outline: 6px solid var(--menu-border);
+      outline-offset: -6px;
+    }
+    body.menu-open{
+      overflow:hidden;
+      touch-action:none;
+    }
+
+    .menu-top{
+      width: 100%;
+      padding: 14px 14px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      max-width: var(--container);
+    }
+    .close-btn{
+      width: 40px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid rgba(16,24,40,.10);
+      background: rgba(255,255,255,.85);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow: 0 10px 18px rgba(16,24,40,.08);
+    }
+
+    .menu-center{
+      flex:1;
+      width: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 10px 16px 18px;
+    }
+    .menu-nav{
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      align-items:center;
+    }
+    .menu-nav a{
+      font-weight:900;
+      letter-spacing:-.2px;
+      text-decoration:none;
+      font-size: 20px;
+      color: rgba(16,24,40,.35);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+    .menu-nav a.active{ color: rgba(16,24,40,.92); }
+    .menu-nav a:hover{ background: rgba(255,255,255,.55); }
+
+    .menu-nav .login-link{
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(16,24,40,.55);
+    }
+    .menu-nav .menu-cta{
+      margin-top: 10px;
+      width: 230px;
+      height: 44px;
+      border-radius: 999px;
+      border: 0;
+      background: #2f49ff;
+      color: white;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(47,73,255,.22);
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .menu-foot{
+      padding: 12px 0 18px;
+      font-size: 11px;
+      color: rgba(16,24,40,.40);
+    }
+
+    .i{ width:18px; height:18px; }
+    .i.sm{ width:16px; height:16px; }
+    .i.lg{ width:20px; height:20px; }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="wrap">
+      <div class="app" id="app">
+        <div class="content">
+
+          <!-- Header -->
+          <header class="topbar">
+            <a class="brand" href="/" aria-label="Billcorn Home">
+              <img src="brand-dots.svg" alt="Billcorn logo">
+              <span>Billcorn</span>
+            </a>
+
+            <!-- Desktop nav -->
+            <nav class="nav" aria-label="Primary">
+              <a href="#home">Home</a>
+              <a href="#features">Features</a>
+              <a href="#contact">Contact</a>
+            </nav>
+
+            <!-- Desktop CTA -->
+            <div class="header-actions">
+              <a class="btn btn-primary" href="https://portal.billcorn.com/signup">
+                <i class="i sm" data-lucide="sparkles"></i> Get Started
+              </a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <button class="menu-btn" id="openMenu" type="button"
+              aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+              <i class="i lg" data-lucide="menu"></i>
+            </button>
+          </header>
+
+          <!-- Hero -->
+          <section class="hero anchor" id="home">
+            <div class="hero-grid">
+              <div>
+                <div class="badge"><span class="dot"></span> V1.0 RELEASED</div>
+
+                <h1>The Power of <span class="accent">Simplicity</span></h1>
+
+                <p class="lead">
+                  Billing made beautiful. Stop wrestling with spreadsheets and start managing your shop with ease.
+                </p>
+
+                <div class="hero-actions">
+                  <!-- FIX: button -> anchor so it actually navigates -->
+                  <a class="btn btn-secondary" href="https://portal.billcorn.com/login">
+                    <i class="i sm" data-lucide="log-in"></i>
+                    Login
+                  </a>
+                </div>
+              </div>
+
+              <div class="rainbow" aria-label="Recent activity">
+                <div class="activity">
+                  <div class="icon-chip" aria-hidden="true">
+                    <i class="i sm" data-lucide="receipt"></i>
+                  </div>
+
+                  <div class="bill">
+                    <div class="pill">RECENT ACTIVITY</div>
+                    <div class="title">Bill #042</div>
+                    <div class="sub">Paid by Jane Doe</div>
+                  </div>
+
+                  <div class="amount">+₹124.00</div>
+                  <div style="opacity:.55; font-weight:900; padding-left:4px;">···</div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Features -->
+          <section class="anchor" id="features">
+            <h2 class="section-title">Effortless Management</h2>
+            <p class="section-sub">Designed to save you time with smart automation and clean interfaces.</p>
+
+            <div class="features-grid">
+              <article class="feature">
+                <div class="mock blue">
+                  <div class="chip-btn">
+                    <span class="chip-icon" aria-hidden="true">
+                      <i class="i sm" data-lucide="send"></i>
+                    </span>
+                    Send Bill
+                  </div>
+                </div>
+                <h3>One-Click Bill generation</h3>
+                <p>Send Bills in seconds, not minutes. Simplified UI for maximum speed.</p>
+              </article>
+
+              <article class="feature">
+                <div class="mock yellow">
+                  <div class="mini-icon" aria-hidden="true">
+                    <i class="i" data-lucide="scan-line"></i>
+                  </div>
+                </div>
+                <h3>Scan to Add</h3>
+                <p>Inventory in your pocket. Just point your camera to scan and add items.</p>
+              </article>
+            </div>
+          </section>
+
+          <!-- CTA -->
+          <section class="anchor" id="get-started">
+            <div class="cta">
+              <div class="cta-inner">
+                <h2>Ready to start?</h2>
+
+                <!-- FIX: button -> anchor so it navigates -->
+                <a class="btn btn-primary" href="https://portal.billcorn.com/signup">
+                  Get Started <i class="i sm" data-lucide="arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Footer -->
+          <footer class="anchor" id="contact">
+            <div class="foot-brand">Billcorn</div>
+            <div style="font-size:11px;">© 2026 Billcorn. All rights reserved.</div>
+
+            <div class="foot-links">
+              <a href="/privacy.html">Privacy</a>
+              <a href="/terms.html">Terms</a>
+
+              <!-- FIX: mailto -->
+              <a href="mailto:contact@billcorn.com">contact@billcorn.com</a>
+            </div>
+
+            <div class="social" aria-label="Social links">
+              <!-- REMOVED X -->
+              <!-- LinkedIn company link (update slug if needed) -->
+              <a href="https://www.linkedin.com/company/billcorn/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                <i class="i sm" data-lucide="linkedin"></i>
+              </a>
+            </div>
+          </footer>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="menu-overlay" id="mobileMenu" aria-hidden="true">
+    <div class="menu-backdrop" id="menuBackdrop"></div>
+
+    <div class="menu-sheet" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="menu-top">
+        <a class="brand" href="#home" aria-label="Billcorn Home" data-close>
+          <img src="brand-dots.svg" alt="Billcorn logo">
+          <span>Billcorn</span>
+        </a>
+
+        <button class="close-btn" id="closeMenu" type="button" aria-label="Close menu">
+          <i class="i lg" data-lucide="x"></i>
+        </button>
+      </div>
+
+      <div class="menu-center">
+        <nav class="menu-nav" aria-label="Mobile">
+          <a class="active" href="#home" data-close>Home</a>
+          <a href="#features" data-close>Features</a>
+
+          <!-- FIX: contact mail -->
+          <a href="mailto:contact@billcorn.com" class="login-link" data-close>contact@billcorn.com</a>
+
+          <!-- FIX: login + signup -->
+          <a class="login-link" href="https://portal.billcorn.com/login" data-close>Login</a>
+
+          <!-- FIX: button -> anchor -->
+          <a class="menu-cta" href="https://portal.billcorn.com/signup" data-close>Get Started</a>
+        </nav>
+      </div>
+
+      <div class="menu-foot">© 2026 Billcorn</div>
+    </div>
+  </div>
+
+  <!-- Lucide (open-source icon pack) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+
+    const openBtn = document.getElementById('openMenu');
+    const closeBtn = document.getElementById('closeMenu');
+    const overlay = document.getElementById('mobileMenu');
+    const backdrop = document.getElementById('menuBackdrop');
+
+    let lastFocus = null;
+
+    function getFocusable(el){
+      return [...el.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])')]
+        .filter(n => !n.hasAttribute('disabled'));
+    }
+
+    function openMenu(){
+      if (window.matchMedia('(min-width: 1024px)').matches) return;
+
+      lastFocus = document.activeElement;
+      overlay.classList.add('active');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+      openBtn.setAttribute('aria-expanded', 'true');
+
+      const focusables = getFocusable(overlay);
+      (focusables[0] || closeBtn).focus();
+    }
+
+    function closeMenu(){
+      overlay.classList.remove('active');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('menu-open');
+      openBtn.setAttribute('aria-expanded', 'false');
+
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+
+    openBtn.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
+    window.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('active')) return;
+
+      if (e.key === 'Escape') closeMenu();
+
+      if (e.key === 'Tab') {
+        const focusables = getFocusable(overlay);
+        if (!focusables.length) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    overlay.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-close]');
+      if (!t) return;
+
+      if (t.tagName.toLowerCase() === 'a') {
+        const href = t.getAttribute('href') || '';
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          closeMenu();
+          setTimeout(() => {
+            document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 120);
+        } else {
+          closeMenu();
+        }
+      } else {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 1024px)').matches && overlay.classList.contains('active')) {
+        closeMenu();
+      }
+    });
+  </script>
+</body>
+</html>
