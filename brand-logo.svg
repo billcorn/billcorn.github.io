@@ -1,0 +1,19 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(100 100) scale(1.7) translate(-100 -100)">
+    
+    <g opacity="0.95">
+      <rect x="65" y="65" width="5" height="55" fill="#6366F1" rx="2.5"/>
+      <rect x="76" y="55" width="7" height="65" fill="#6366F1" rx="3.5"/>
+      <rect x="89" y="60" width="5" height="60" fill="#6366F1" rx="2.5"/>
+      <rect x="100" y="50" width="9" height="70" fill="#6366F1" rx="4.5"/>
+      <rect x="115" y="58" width="5" height="62" fill="#6366F1" rx="2.5"/>
+      <rect x="126" y="53" width="7" height="67" fill="#6366F1" rx="3.5"/>
+    </g>
+    
+    <path d="M 55 130 Q 100 155 145 130" 
+          stroke="#6366F1" 
+          stroke-width="9" 
+          fill="none" 
+          stroke-linecap="round"/>
+  </g>
+</svg>

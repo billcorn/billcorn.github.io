@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BillCorn Feature Graphic</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .canvas-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        canvas {
+            border: 1px solid #ddd;
+            display: block;
+        }
+        
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 1024px;
+        }
+        
+        button {
+            background: #6366F1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        button:hover {
+            background: #4F46E5;
+        }
+        
+        .info {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <h1>BillCorn - Google Play Feature Graphic</h1>
+        <p class="info">Dimensions: 1024 x 500 pixels | Right-click on the image below to save</p>
+        <button onclick="downloadImage()">Download Feature Graphic (PNG)</button>
+    </div>
+    
+    <div class="canvas-container">
+        <canvas id="featureGraphic" width="1024" height="500"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('featureGraphic');
+        const ctx = canvas.getContext('2d');
+        
+        // Brand color
+        const brandColor = '#6366F1';
+        const darkBg = '#1E1B4B';
+        const lightAccent = '#818CF8';
+        
+        async function drawFeatureGraphic() {
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 1024, 500);
+            gradient.addColorStop(0, '#0F172A');
+            gradient.addColorStop(1, '#1E293B');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 1024, 500);
+            
+            // Decorative elements - large barcode in background
+            ctx.globalAlpha = 0.08;
+            ctx.fillStyle = brandColor;
+            
+            // Background barcode bars
+            const barPositions = [150, 200, 250, 320, 380, 450, 500, 570, 620, 680, 730, 800];
+            barPositions.forEach((x, i) => {
+                const height = 200 + Math.sin(i) * 50;
+                const width = i % 3 === 0 ? 25 : 15;
+                ctx.fillRect(x, (500 - height) / 2, width, height);
+            });
+            
+            ctx.globalAlpha = 1;
+            
+            // Left side - App icon area
+            const iconSize = 160;
+            const iconX = 100;
+            const iconY = 170;
+            
+            // Draw app icon background circle
+            ctx.fillStyle = '#1E293B';
+            ctx.beginPath();
+            ctx.arc(iconX + iconSize/2, iconY + iconSize/2, iconSize/2 + 15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw the exact SVG logo
+            await new Promise((resolve) => {
+                const svgLogo = `
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="${iconSize}" height="${iconSize}">
+                      <g transform="translate(100 100) scale(1.7) translate(-100 -100)">
+                        <g opacity="0.95">
+                          <rect x="65" y="65" width="5" height="55" fill="${brandColor}" rx="2.5"/>
+                          <rect x="76" y="55" width="7" height="65" fill="${brandColor}" rx="3.5"/>
+                          <rect x="89" y="60" width="5" height="60" fill="${brandColor}" rx="2.5"/>
+                          <rect x="100" y="50" width="9" height="70" fill="${brandColor}" rx="4.5"/>
+                          <rect x="115" y="58" width="5" height="62" fill="${brandColor}" rx="2.5"/>
+                          <rect x="126" y="53" width="7" height="67" fill="${brandColor}" rx="3.5"/>
+                        </g>
+                        <path d="M 55 130 Q 100 155 145 130" 
+                              stroke="${brandColor}" 
+                              stroke-width="9" 
+                              fill="none" 
+                              stroke-linecap="round"/>
+                      </g>
+                    </svg>
+                `;
+                
+                const img = new Image();
+                const svgBlob = new Blob([svgLogo], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(svgBlob);
+                
+                img.onload = function() {
+                    ctx.drawImage(img, iconX, iconY, iconSize, iconSize);
+                    URL.revokeObjectURL(url);
+                    resolve();
+                };
+                img.src = url;
+            });
+            
+            // Main text area
+            const textStartX = 330;
+            
+            // App name
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = 'bold 72px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillText('Billcorn', textStartX, 200);
+            
+            // Tagline
+            ctx.fillStyle = lightAccent;
+            ctx.font = '32px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillText('Smart Barcode Billing for Retailers', textStartX, 250);
+            
+            // Features with icons - displayed vertically to avoid overlap
+            ctx.font = '26px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.fillStyle = '#94A3B8';
+            
+            const features = [
+                { icon: '📱', text: 'Scan & Bill Instantly' },
+                { icon: '🏷️', text: 'Create Barcodes' },
+                { icon: '📊', text: 'Track Payments' }
+            ];
+            
+            let featureY = 300;
+            features.forEach((feature) => {
+                ctx.fillText(feature.icon + '  ' + feature.text, textStartX, featureY);
+                featureY += 45; // Space between features
+            });
+            
+            // Decorative accent line
+            ctx.strokeStyle = brandColor;
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(textStartX, 270);
+            ctx.lineTo(textStartX + 250, 270);
+            ctx.stroke();
+            
+            // Small barcode graphic on right side
+            ctx.globalAlpha = 0.15;
+            ctx.fillStyle = brandColor;
+            const rightBars = [850, 870, 885, 905, 920, 940];
+            rightBars.forEach((x) => {
+                ctx.fillRect(x, 150, 8, 200);
+            });
+            ctx.globalAlpha = 1;
+        }
+        
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'billcorn-feature-graphic-1024x500.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Draw on load
+        drawFeatureGraphic();
+    </script>
+</body>
+</html>
