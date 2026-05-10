@@ -3,14 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Billcorn — billing made beautiful. Smart invoicing, inventory, and effortless shop management." />
+  <title>Billcorn — Smart Billing & Inventory Management Software for Small Businesses</title>
+
+  <meta name="description" content="Billcorn is smart billing and inventory management software for small businesses. Create invoices in seconds, scan barcodes to add items, and track sales in real-time." />
   <meta name="theme-color" content="#f6f7f7" />
-  <title>Billcorn — The Power of Simplicity</title>
+
+  <meta property="og:title" content="Billcorn — The Power of Simplicity">
+  <meta property="og:description" content="Smart billing, inventory, and effortless shop management with Billcorn. Now available on Google Play and the App Store.">
+  <meta property="og:image" content="https://billcorn.com/og-image.jpg">
+  <meta property="og:url" content="https://billcorn.com">
+  <meta property="og:type" content="website">
+
+  <!-- Additional SEO -->
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Billcorn">
+  <link rel="canonical" href="https://billcorn.com/">
+  <meta name="apple-itunes-app" content="app-id=6758623792">
 
   <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+  <!-- Preload logo -->
+  <link rel="preload" href="/brand-logo.svg" as="image">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- DNS Prefetch for external resources -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://unpkg.com">
 
   <style>
     :root{
@@ -126,7 +148,7 @@
       text-decoration:none;
       white-space:nowrap;
     }
-    .brand img{ width:40px;height:40px; display:block; }
+    .brand img{ width:32px;height:32px; display:block; }
     .brand span{ font-size: 15px; }
 
     /* Desktop nav (no menu button) */
@@ -279,6 +301,35 @@
     @media (min-width: 560px){
       .hero-actions{ flex-direction:row; width:auto; }
       .hero-actions .btn{ min-width: 160px; }
+    }
+
+    .store-links{
+      margin-top: 14px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap: 10px;
+    }
+    .store-badge{
+      display:inline-flex;
+      border-radius: 10px;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .store-badge:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(16,24,40,.14);
+    }
+    .store-badge img{
+      display:block;
+      height: 42px;
+      width: auto;
+    }
+    .store-support{
+      width: 100%;
+      margin: 2px 0 0;
+      color: rgba(16,24,40,.62);
+      font-size: 12px;
+      font-weight: 700;
     }
 
     /* Rainbow activity */
@@ -646,6 +697,23 @@
     .i.sm{ width:16px; height:16px; }
     .i.lg{ width:20px; height:20px; }
   </style>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Billcorn",
+      "operatingSystem": "Android, iOS, Web",
+      "applicationCategory": "BusinessApplication",
+      "description": "Smart invoicing, inventory, and effortless shop management.",
+      "featureList": [
+        "One-Click Bill Generation",
+        "Inventory Management",
+        "Barcode Scanning",
+        "Real-time Activity Tracking"
+      ]
+    }
+  </script>
 </head>
 
 <body>
@@ -657,7 +725,7 @@
           <!-- Header -->
           <header class="topbar">
             <a class="brand" href="/" aria-label="Billcorn Home">
-              <img src="brand-dots.svg" alt="Billcorn logo">
+            <img src="brand-logo.svg" alt="Billcorn billing software logo - colorful dots forming B letter" width="40" height="40">
               <span>Billcorn</span>
             </a>
 
@@ -699,6 +767,18 @@
                   <a class="btn btn-secondary" href="https://portal.billcorn.com/login">
                     <i class="i sm" data-lucide="log-in"></i>
                     Login
+                  </a>
+                </div>
+
+                <div class="store-links" aria-label="Download Billcorn">
+                  <a class="store-badge" href="https://apps.apple.com/us/app/billcorn/id6758623792" target="_blank" rel="noopener noreferrer" aria-label="Download Billcorn on the App Store for iPhone and iPad">
+                    <img src="app-store-badge-black.png" alt="Download on the App Store">
+                  </a>
+                  <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.billcorn.app" target="_blank" rel="noopener noreferrer" aria-label="Get Billcorn on Google Play">
+                    <img src="GetItOnGooglePlay_Badge_Web_color_English.png" alt="Get it on Google Play">
+                  </a>
+                  <a class="store-badge" href="https://apps.apple.com/us/app/billcorn/id6758623792" target="_blank" rel="noopener noreferrer" aria-label="Download Billcorn for Mac from the App Store">
+                    <img src="mac-app-store-badge-black.png" alt="Download on the Mac App Store">
                   </a>
                 </div>
               </div>
@@ -802,7 +882,7 @@
     <div class="menu-sheet" role="dialog" aria-modal="true" aria-label="Menu">
       <div class="menu-top">
         <a class="brand" href="#home" aria-label="Billcorn Home" data-close>
-          <img src="brand-dots.svg" alt="Billcorn logo">
+          <img src="brand-logo.svg" alt="Billcorn logo">
           <span>Billcorn</span>
         </a>
 
