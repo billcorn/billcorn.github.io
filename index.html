@@ -3,714 +3,1215 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Billcorn — Smart Billing & Inventory Management Software for Small Businesses</title>
+  <title>Billcorn - Billing, Barcode &amp; Invoice Software for Shops</title>
 
-  <meta name="description" content="Billcorn is smart billing and inventory management software for small businesses. Create invoices in seconds, scan barcodes to add items, and track sales in real-time." />
-  <meta name="theme-color" content="#f6f7f7" />
+  <meta name="description" content="Create bills instantly, share invoice links on WhatsApp, save paper, print thermal or A4 receipts, scan barcodes, create barcode labels, and manage recurring billing with Billcorn." />
+  <meta name="theme-color" content="#f8faf9" />
 
-  <meta property="og:title" content="Billcorn — The Power of Simplicity">
-  <meta property="og:description" content="Smart billing, inventory, and effortless shop management with Billcorn. Now available on Google Play and the App Store.">
+  <meta property="og:title" content="Billcorn - Billing, Barcode &amp; Invoice Software for Shops">
+  <meta property="og:description" content="Create bills instantly, share invoice links on WhatsApp, save paper, print thermal or A4 receipts, scan barcodes, create barcode labels, and manage recurring billing with Billcorn.">
   <meta property="og:image" content="https://billcorn.com/og-image.jpg">
   <meta property="og:url" content="https://billcorn.com">
   <meta property="og:type" content="website">
 
-  <!-- Additional SEO -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Billcorn - Billing, Barcode &amp; Invoice Software for Shops">
+  <meta name="twitter:description" content="Instant billing, WhatsApp bill links, paper-saving invoices, barcode checkout, printer-ready receipts, and recurring billing for shops.">
+  <meta name="twitter:image" content="https://billcorn.com/og-image.jpg">
+
   <meta name="robots" content="index, follow">
   <meta name="author" content="Billcorn">
   <link rel="canonical" href="https://billcorn.com/">
   <meta name="apple-itunes-app" content="app-id=6758623792">
 
-  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
-  <!-- Preload logo -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
   <link rel="preload" href="/brand-logo.svg" as="image">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-  <!-- DNS Prefetch for external resources -->
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
   <style>
     :root{
+      --bg:#f8faf9;
+      --surface:#ffffff;
+      --surface-soft:#f2f5f4;
       --text:#101828;
       --muted:#667085;
-
-      --green:#35b36f;
-      --green2:#2aa86b;
-      --green-dark:#1b8f52;
-
-      --glass: rgba(255,255,255,.78);
-      --glass2: rgba(255,255,255,.70);
-
-      --shadow: 0 18px 45px rgba(16,24,40,.12);
-      --shadow-soft: 0 10px 24px rgba(16,24,40,.10);
-
-      --radius-xl: 26px;
-      --radius-lg: 22px;
-      --radius-md: 18px;
-
-      --menu-border:#5b7cff;
-
-      --container: 1120px;
+      --line:#dce3e0;
+      --green:#27ae60;
+      --green-dark:#16834a;
+      --ink:#162033;
+      --blue:#2563eb;
+      --amber:#b7791f;
+      --shadow:0 26px 70px rgba(16,24,40,.12);
+      --soft-shadow:0 14px 34px rgba(16,24,40,.08);
+      --container:1160px;
     }
 
     *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    html{ scroll-behavior:smooth; }
     body{
       margin:0;
-      font-family:"Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color:var(--text);
-      background: linear-gradient(180deg, #eef3f2 0%, #f6f7f7 45%, #f3f4f6 100%);
+      background:
+        linear-gradient(180deg, #fff 0%, var(--bg) 42%, #f1f5f4 100%);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
     a{ color:inherit; }
+    button, input{ font:inherit; }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      *{ scroll-behavior:auto !important; transition:none !important; animation:none !important; }
+      *{ animation:none !important; scroll-behavior:auto !important; transition:none !important; }
     }
 
-    /* Page + soft blobs */
     .page{
       min-height:100vh;
-      position:relative;
       overflow:hidden;
-      padding: clamp(10px, 2vw, 22px);
+      padding-top:79px;
     }
-    .page::before{
-      content:"";
-      position:absolute;
-      inset:-160px -160px auto -160px;
-      height: 680px;
-      background:
-        radial-gradient(260px 260px at 20% 28%, rgba(255,214,140,.72), rgba(255,214,140,0) 62%),
-        radial-gradient(320px 320px at 74% 22%, rgba(146,224,182,.70), rgba(146,224,182,0) 62%),
-        radial-gradient(360px 360px at 55% 68%, rgba(255,167,190,.55), rgba(255,167,190,0) 66%);
-      pointer-events:none;
-      z-index:0;
+    .container{
+      width:min(var(--container), calc(100% - 32px));
+      margin:0 auto;
     }
+    .anchor{ scroll-margin-top:98px; }
 
-    .wrap{
-      position:relative;
-      z-index:1;
-      width: 100%;
-      margin: 0 auto;
-    }
-
-    /* Surface */
-    .app{
-      width:100%;
-      background: rgba(244,245,244,.92);
-      border-radius: clamp(0px, 2vw, 22px);
-      overflow:hidden;
-    }
-    @media (min-width: 760px){
-      .app{
-        background: rgba(244,245,244,.86);
-        box-shadow: 0 26px 60px rgba(16,24,40,.10);
-        border: 1px solid rgba(16,24,40,.06);
-      }
-    }
-
-    .content{
-      padding: 16px 16px 26px;
-    }
-    @media (min-width: 760px){
-      .content{ padding: 18px 22px 28px; }
-    }
-    @media (min-width: 1024px){
-      .content{ padding: 20px 28px 34px; }
-    }
-
-    /* Header */
     .topbar{
-      background: rgba(255,255,255,.72);
-      border: 1px solid rgba(16,24,40,.06);
-      border-radius: 999px;
-      padding: 10px 12px;
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:40;
+      padding:12px 0;
+      background:rgba(248,250,249,.78);
+      border-bottom:1px solid rgba(220,227,224,.72);
+      backdrop-filter:blur(18px);
+    }
+    .nav-shell{
+      min-height:54px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 10px;
-      box-shadow: 0 8px 24px rgba(16,24,40,.08);
-      backdrop-filter: blur(10px);
+      gap:18px;
     }
-
     .brand{
       display:flex;
       align-items:center;
       gap:10px;
-      font-weight:900;
-      letter-spacing:.2px;
-      text-decoration:none;
-      white-space:nowrap;
-    }
-    .brand img{ width:32px;height:32px; display:block; }
-    .brand span{ font-size: 15px; }
-
-    /* Desktop nav (no menu button) */
-    .nav{
-      display:none;
-      align-items:center;
-      gap: 18px;
-      margin: 0 auto;
-    }
-    .nav a{
       text-decoration:none;
       font-weight:800;
-      font-size: 13px;
-      color: rgba(16,24,40,.62);
-      padding: 8px 10px;
-      border-radius: 999px;
+      letter-spacing:-.02em;
     }
-    .nav a:hover{ background: rgba(255,255,255,.55); }
-
-    .header-actions{
+    .brand img{
+      width:34px;
+      height:34px;
+      display:block;
+    }
+    .nav-links{
       display:none;
       align-items:center;
-      gap: 10px;
-      white-space:nowrap;
+      gap:4px;
+      padding:5px;
+      border:1px solid rgba(220,227,224,.8);
+      background:rgba(255,255,255,.78);
+      border-radius:999px;
     }
-
-    @media (min-width: 1024px){
-      .nav{ display:flex; }
-      .header-actions{ display:flex; }
+    .nav-links a{
+      text-decoration:none;
+      color:rgba(16,24,40,.68);
+      font-size:13px;
+      font-weight:700;
+      padding:9px 12px;
+      border-radius:999px;
     }
-
-    /* Mobile menu button (hidden on desktop) */
-    .menu-btn{
-      width: 40px;
-      height: 36px;
-      border-radius: 999px;
-      border: 1px solid rgba(16,24,40,.08);
-      background: rgba(255,255,255,.85);
+    .nav-links a:hover{
+      background:var(--surface-soft);
+      color:var(--text);
+    }
+    .nav-actions{
+      display:none;
+      align-items:center;
+      gap:10px;
+    }
+    .menu-toggle{
+      width:42px;
+      height:42px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:var(--surface);
+      color:var(--text);
       display:grid;
       place-items:center;
       cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease;
-      flex: 0 0 auto;
-    }
-    .menu-btn:active{ transform: scale(.98); }
-    @media (min-width: 1024px){
-      .menu-btn{ display:none; }
     }
 
-    /* Buttons */
+    .mobile-menu{
+      display:none;
+      padding:0 0 10px;
+    }
+    .mobile-menu.is-open{ display:block; }
+    .mobile-menu nav{
+      display:grid;
+      gap:8px;
+      padding:10px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      box-shadow:var(--soft-shadow);
+      border-radius:8px;
+    }
+    .mobile-menu a{
+      text-decoration:none;
+      color:var(--text);
+      font-size:14px;
+      font-weight:800;
+      padding:11px 12px;
+      border-radius:8px;
+      background:var(--surface-soft);
+    }
+
+    @media (min-width: 1040px){
+      .nav-links,
+      .nav-actions{ display:flex; }
+      .menu-toggle,
+      .mobile-menu{ display:none !important; }
+    }
+
     .btn{
-      height: 44px;
-      border-radius: 999px;
-      border: 0;
-      cursor:pointer;
-      font-weight: 900;
-      font-size: 13px;
-      letter-spacing: .2px;
-      transition: transform .12s ease, box-shadow .12s ease;
+      min-height:44px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap: 8px;
-      padding: 0 16px;
+      gap:9px;
+      border:0;
+      border-radius:999px;
+      padding:0 18px;
+      font-size:14px;
+      font-weight:800;
       text-decoration:none;
-      user-select:none;
+      cursor:pointer;
+      white-space:nowrap;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
     }
-    .btn:active{ transform: scale(.99); }
-
+    .btn:active{ transform:scale(.98); }
     .btn-primary{
-      background: linear-gradient(180deg, #46c782 0%, #2aa86b 100%);
       color:#fff;
-      box-shadow: 0 14px 26px rgba(42,168,107,.26);
+      background:#101828;
+      box-shadow:0 16px 34px rgba(16,24,40,.18);
     }
-    .btn-secondary{
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(16,24,40,.08);
-      color: rgba(16,24,40,.82);
-      box-shadow: 0 10px 20px rgba(16,24,40,.08);
-      backdrop-filter: blur(10px);
+    .btn-primary:hover{ background:#050a14; }
+    .btn-soft{
+      color:var(--text);
+      background:var(--surface);
+      border:1px solid var(--line);
+    }
+    .btn-green{
+      color:#fff;
+      background:var(--green);
+      box-shadow:0 16px 34px rgba(39,174,96,.22);
     }
 
-    /* Hero */
     .hero{
-      padding: 18px 6px 6px;
+      min-height:calc(100vh - 80px);
+      display:grid;
+      align-items:center;
+      padding:64px 0 56px;
     }
     .hero-grid{
       display:grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
+      gap:42px;
       align-items:center;
     }
-    @media (min-width: 960px){
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin:0 0 18px;
+      padding:7px 11px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.82);
+      color:var(--green-dark);
+      font-size:12px;
+      font-weight:850;
+      letter-spacing:.02em;
+    }
+    .eyebrow::before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--green);
+      box-shadow:0 0 0 4px rgba(39,174,96,.12);
+    }
+    h1{
+      margin:0;
+      max-width:720px;
+      font-size:clamp(44px, 7.2vw, 86px);
+      line-height:.96;
+      letter-spacing:-.07em;
+      font-weight:900;
+    }
+    .hero-lead{
+      margin:22px 0 0;
+      max-width:640px;
+      color:rgba(16,24,40,.72);
+      font-size:clamp(17px, 2vw, 21px);
+      line-height:1.5;
+      letter-spacing:-.02em;
+      font-weight:560;
+    }
+    .hero-actions{
+      margin-top:28px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    .hero-proof{
+      margin-top:22px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      color:rgba(16,24,40,.62);
+      font-size:13px;
+      font-weight:760;
+    }
+    .hero-proof span{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.72);
+    }
+
+    @media (min-width: 980px){
       .hero-grid{
-        grid-template-columns: 1.05fr .95fr;
-        gap: 24px;
-        padding: 10px 4px 0;
+        grid-template-columns:minmax(0, .86fr) minmax(540px, 1.14fr);
+        gap:28px;
+      }
+      .story-stage{
+        justify-self:end;
+        width:min(680px, calc(100% + 60px));
+        left:clamp(24px, 4vw, 64px);
       }
     }
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.58);
-      border: 1px solid rgba(16,24,40,.06);
-      color:#2f855a;
-      font-weight:900;
-      font-size:11px;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-      backdrop-filter: blur(10px);
-    }
-    .dot{
-      width:8px;height:8px;border-radius:999px;
-      background:#5bd08f;
-      box-shadow:0 0 0 4px rgba(91,208,143,.18);
-    }
-
-    h1{
-      margin: 12px 0 10px;
-      font-size: clamp(32px, 5vw, 46px);
-      line-height:1.05;
-      letter-spacing:-1.15px;
-      font-weight: 900;
-    }
-    .accent{
-      background: linear-gradient(90deg, #44c07c 0%, #2aa86b 45%, #2aa86b 100%);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-    .lead{
-      margin: 0 0 14px;
-      max-width: 420px;
-      color: rgba(16,24,40,.72);
-      font-size: 13px;
-      line-height: 1.55;
-      font-weight: 600;
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      width: min(340px, 100%);
-    }
-    @media (min-width: 560px){
-      .hero-actions{ flex-direction:row; width:auto; }
-      .hero-actions .btn{ min-width: 160px; }
-    }
-
-    .store-links{
-      margin-top: 14px;
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap: 10px;
-    }
-    .store-badge{
-      display:inline-flex;
-      border-radius: 10px;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .store-badge:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(16,24,40,.14);
-    }
-    .store-badge img{
-      display:block;
-      height: 42px;
-      width: auto;
-    }
-    .store-support{
-      width: 100%;
-      margin: 2px 0 0;
-      color: rgba(16,24,40,.62);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    /* Rainbow activity */
-    .rainbow{
-      width: min(440px, 100%);
-      height: 160px;
-      border-radius: 28px;
-      padding: 12px;
-      background:
-        linear-gradient(135deg,
-          rgba(60,231,170,.95) 0%,
-          rgba(255,214,94,.95) 22%,
-          rgba(255,120,148,.95) 45%,
-          rgba(144,129,255,.95) 70%,
-          rgba(88,240,204,.95) 100%);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow:hidden;
-      justify-self:center;
-    }
-    .rainbow::after{
-      content:"";
-      position:absolute; inset:0;
-      background: radial-gradient(600px 240px at 30% 20%, rgba(255,255,255,.18), rgba(255,255,255,0) 60%);
-      pointer-events:none;
-    }
-
-    .activity{
-      position:absolute;
-      left:14px; right:14px; bottom:14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(16,24,40,.08);
-      padding: 10px 12px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      box-shadow: 0 14px 26px rgba(16,24,40,.12);
-      backdrop-filter: blur(12px);
-    }
-    .activity .pill{
-      font-size:10px;
-      font-weight:900;
-      letter-spacing:.55px;
-      color: rgba(16,24,40,.65);
-    }
-    .bill{ flex:1; min-width:0; }
-    .bill .title{
-      font-weight:900;
-      font-size:12px;
-      margin-top:4px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .bill .sub{
-      color: rgba(16,24,40,.55);
-      font-size:11px;
-      margin-top:2px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .amount{
-      font-weight:900;
-      font-size:12px;
-      color: var(--green-dark);
-      white-space:nowrap;
-    }
-    .icon-chip{
-      width:30px;height:30px;border-radius:10px;
-      background: rgba(53,179,111,.14);
-      border: 1px solid rgba(53,179,111,.18);
-      display:grid;
-      place-items:center;
-      flex:0 0 auto;
-    }
-
-    /* Sections */
-    .anchor{ scroll-margin-top: 100px; }
-    html{ scroll-behavior:smooth; }
-
-    .section-title{
-      margin: 18px 0 6px;
-      font-weight: 900;
-      letter-spacing: -.6px;
-      font-size: clamp(22px, 3vw, 28px);
-    }
-    .section-sub{
-      margin:0 0 14px;
-      color: rgba(16,24,40,.60);
-      font-size: 12.5px;
-      line-height: 1.55;
-      max-width: 720px;
-    }
-
-    .features-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    @media (min-width: 760px){
-      .features-grid{ grid-template-columns: 1fr 1fr; }
-    }
-
-    .feature{
-      background: var(--glass);
-      border: 1px solid rgba(16,24,40,.08);
-      border-radius: 22px;
-      padding: 14px;
-      box-shadow: 0 10px 22px rgba(16,24,40,.08);
-      backdrop-filter: blur(10px);
-    }
-    .feature .mock{
-      height: 120px;
-      border-radius: 18px;
-      border: 1px solid rgba(16,24,40,.06);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position: relative;
-      overflow:hidden;
-    }
-    .mock.blue{
-      background:
-        radial-gradient(160px 120px at 22% 28%, rgba(94,173,255,.28), rgba(94,173,255,0) 60%),
-        radial-gradient(220px 160px at 70% 60%, rgba(201,222,255,.42), rgba(201,222,255,0) 62%),
-        linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.35));
-    }
-    .mock.yellow{
-      background:
-        radial-gradient(220px 180px at 30% 30%, rgba(255,224,121,.45), rgba(255,224,121,0) 62%),
-        radial-gradient(220px 180px at 70% 60%, rgba(146,224,182,.36), rgba(146,224,182,0) 62%),
-        linear-gradient(180deg, rgba(255,255,255,.70), rgba(255,255,255,.35));
-    }
-
-    .chip-btn{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(53,179,111,.95);
-      color:#fff;
-      font-weight:900;
-      font-size:12px;
-      border: 1px solid rgba(255,255,255,.35);
-      box-shadow: 0 12px 22px rgba(42,168,107,.26);
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .chip-icon{
-      width:30px;height:26px;
-      border-radius:24px;
-      background: rgba(255,255,255,.22);
-      border: 1px solid rgba(255,255,255,.30);
-      display:grid;
-      place-items:center;
-    }
-
-    .mini-icon{
-      width:44px;height:44px;border-radius:999px;
-      background: rgba(53,179,111,.12);
-      border: 1px solid rgba(53,179,111,.18);
-      display:grid;place-items:center;
-    }
-
-    .feature h3{
-      margin: 12px 0 6px;
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: -.2px;
-    }
-    .feature p{
-      margin:0;
-      color: rgba(16,24,40,.62);
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
-    /* CTA block */
-    .cta{
-      margin: 16px 0 10px;
-      background: linear-gradient(180deg, #2a2f37 0%, #14181f 100%);
-      color:#fff;
-      border-radius: 24px;
-      padding: 18px 16px;
-      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+    .story-stage{
       position:relative;
+      min-height:560px;
+      display:grid;
+      place-items:center;
+      perspective:1200px;
+    }
+    .billing-window{
+      position:relative;
+      z-index:2;
+      width:min(460px, 100%);
+      border:1px solid rgba(16,24,40,.10);
+      border-radius:8px;
+      background:rgba(255,255,255,.92);
+      box-shadow:var(--shadow);
       overflow:hidden;
-      text-align:center;
+      transform:rotateX(5deg) rotateY(-8deg);
+      transform-style:preserve-3d;
     }
-    .cta::before{
-      content:"";
-      position:absolute;
-      inset:-30% -30%;
-      background:
-        radial-gradient(260px 200px at 25% 20%, rgba(53,179,111,.28), rgba(53,179,111,0) 60%),
-        radial-gradient(300px 240px at 75% 80%, rgba(255,214,121,.22), rgba(255,214,121,0) 62%);
-      pointer-events:none;
-    }
-    .cta-inner{ position:relative; z-index:1; }
-    .cta h2{
-      margin:0 0 6px;
-      font-size: clamp(20px, 2.8vw, 24px);
-      font-weight: 900;
-      letter-spacing: -.5px;
-    }
-
-    /* Footer */
-    footer{
-      text-align:center;
-      padding: 14px 6px 24px;
-      color: rgba(16,24,40,.55);
-    }
-    .foot-brand{
-      font-weight: 900;
-      color: rgba(16,24,40,.88);
-    }
-    .foot-links{
-      display:flex;
-      justify-content:center;
-      gap:14px;
-      font-size:12px;
-      margin: 10px 0 10px;
-      flex-wrap:wrap;
-    }
-    .foot-links a{
-      color: rgba(16,24,40,.58);
-      text-decoration:none;
-      font-weight: 800;
-    }
-    .social{
-      display:flex;
-      justify-content:center;
-      gap:14px;
-      margin-top:10px;
-    }
-    .social a{
-      width:32px;height:32px;border-radius:999px;
-      display:grid;place-items:center;
-      border: 1px solid rgba(16,24,40,.10);
-      background: rgba(255,255,255,.7);
-      text-decoration:none;
-    }
-
-    /* ---------- Mobile Menu Overlay (only for <1024px) ---------- */
-    .menu-overlay{
-      position: fixed;
-      inset: 0;
-      display: none;
-      z-index: 50;
-    }
-    .menu-overlay.active{ display:block; }
-
-    .menu-backdrop{
-      position:absolute;
-      inset:0;
-      background: rgba(255,255,255,.65);
-      backdrop-filter: blur(12px);
-    }
-
-    .menu-sheet{
-      position:absolute;
-      inset: 0;
-      transform: translateX(100%);
-      transition: transform .22s ease;
-      background:
-        radial-gradient(260px 220px at 30% 20%, rgba(94,173,255,.14), rgba(94,173,255,0) 60%),
-        radial-gradient(280px 240px at 70% 50%, rgba(255,214,121,.14), rgba(255,214,121,0) 62%),
-        radial-gradient(280px 240px at 50% 80%, rgba(146,224,182,.14), rgba(146,224,182,0) 62%),
-        #fbfbfc;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-    }
-    .menu-overlay.active .menu-sheet{ transform: translateX(0); }
-
-    @media (min-width: 1024px){
-      .menu-overlay{ display:none !important; }
-    }
-
-    body.menu-open .app{
-      outline: 6px solid var(--menu-border);
-      outline-offset: -6px;
-    }
-    body.menu-open{
-      overflow:hidden;
-      touch-action:none;
-    }
-
-    .menu-top{
-      width: 100%;
-      padding: 14px 14px 10px;
+    .window-bar{
+      min-height:50px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      max-width: var(--container);
+      gap:12px;
+      padding:13px 14px;
+      border-bottom:1px solid var(--line);
+      background:#fbfcfc;
     }
-    .close-btn{
-      width: 40px;
-      height: 36px;
-      border-radius: 999px;
-      border: 1px solid rgba(16,24,40,.10);
-      background: rgba(255,255,255,.85);
+    .traffic{
+      display:flex;
+      gap:6px;
+    }
+    .traffic span{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#dde4e1;
+    }
+    .window-title{
+      flex:1;
+      text-align:center;
+      color:rgba(16,24,40,.64);
+      font-size:12px;
+      font-weight:850;
+    }
+    .billing-body{ padding:16px; }
+    .checkout-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:14px;
+    }
+    .checkout-head h2{
+      margin:0 0 5px;
+      font-size:23px;
+      letter-spacing:-.04em;
+    }
+    .checkout-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:700;
+    }
+    .total-pill{
+      padding:10px 12px;
+      border-radius:8px;
+      background:#101828;
+      color:#fff;
+      text-align:right;
+      font-weight:850;
+      box-shadow:0 12px 22px rgba(16,24,40,.16);
+    }
+    .total-pill span{
+      display:block;
+      margin-bottom:2px;
+      color:rgba(255,255,255,.64);
+      font-size:10px;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+    .scan-strip{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:42px;
+      padding:10px 12px;
+      border:1px solid #d8eee2;
+      border-radius:8px;
+      background:#f2fbf6;
+      color:var(--green-dark);
+      font-size:13px;
+      font-weight:850;
+    }
+    .bill-list{
+      display:grid;
+      gap:8px;
+      margin:12px 0;
+    }
+    .bill-row{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      gap:10px;
+      min-height:52px;
+      padding:10px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+    }
+    .qty{
+      width:31px;
+      height:31px;
       display:grid;
       place-items:center;
-      cursor:pointer;
-      box-shadow: 0 10px 18px rgba(16,24,40,.08);
+      border-radius:8px;
+      background:var(--surface-soft);
+      color:rgba(16,24,40,.62);
+      font-size:12px;
+      font-weight:850;
     }
-
-    .menu-center{
-      flex:1;
-      width: 100%;
+    .item-name{
+      display:block;
+      font-size:13px;
+      font-weight:850;
+    }
+    .item-code{
+      display:block;
+      margin-top:3px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+    }
+    .item-price{
+      font-size:13px;
+      font-weight:850;
+    }
+    .customer-strip{
+      display:grid;
+      gap:8px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fbfcfc;
+    }
+    .input-label{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      color:rgba(16,24,40,.58);
+      font-size:11px;
+      font-weight:850;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+    .phone-line{
+      height:32px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--text);
+      font-size:16px;
+      font-weight:850;
+      letter-spacing:-.02em;
+    }
+    .phone-digits{
+      display:inline-block;
+      white-space:nowrap;
+      overflow:hidden;
+    }
+    .action-row{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:8px;
+      margin-top:12px;
+    }
+    .mini-action{
+      min-height:48px;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 10px 16px 18px;
+      gap:7px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      color:rgba(16,24,40,.70);
+      font-size:12px;
+      font-weight:850;
     }
-    .menu-nav{
+    .mini-action.is-hot{
+      border-color:#bdeacb;
+      background:#effbf4;
+      color:var(--green-dark);
+      box-shadow:0 10px 20px rgba(39,174,96,.12);
+    }
+
+    .receipt-output{
+      position:absolute;
+      z-index:1;
+      right:-76px;
+      bottom:76px;
+      width:172px;
+      padding:16px 14px;
+      border:1px solid rgba(16,24,40,.10);
+      border-radius:8px;
+      background:#fff;
+      box-shadow:0 22px 46px rgba(16,24,40,.16);
+    }
+    .receipt-output::before{
+      content:"";
+      position:absolute;
+      top:-18px;
+      left:22px;
+      right:22px;
+      height:18px;
+      border-radius:8px 8px 0 0;
+      background:#182231;
+    }
+    .receipt-output h3{
+      margin:0 0 10px;
+      font-size:13px;
       text-align:center;
+      letter-spacing:-.02em;
+    }
+    .receipt-line{
+      height:8px;
+      margin:7px 0;
+      border-radius:999px;
+      background:#e8eeec;
+    }
+    .receipt-line.short{ width:62%; }
+    .receipt-total{
+      margin-top:12px;
+      padding-top:10px;
+      border-top:1px dashed #cbd5d1;
       display:flex;
-      flex-direction:column;
-      gap: 10px;
+      justify-content:space-between;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .barcode-sticker{
+      position:absolute;
+      z-index:1;
+      left:-96px;
+      bottom:48px;
+      width:210px;
+      padding:12px;
+      border:1px solid rgba(16,24,40,.10);
+      border-radius:8px;
+      background:#fffdf6;
+      box-shadow:0 18px 40px rgba(16,24,40,.14);
+      transform:rotate(-4deg);
+    }
+    .barcode-label{
+      margin-bottom:8px;
+      color:var(--amber);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+    .barcode-bars{
+      height:50px;
+      background:
+        linear-gradient(90deg,
+          #111 0 4px, transparent 4px 8px,
+          #111 8px 10px, transparent 10px 15px,
+          #111 15px 21px, transparent 21px 25px,
+          #111 25px 27px, transparent 27px 33px,
+          #111 33px 41px, transparent 41px 45px,
+          #111 45px 48px, transparent 48px 54px,
+          #111 54px 62px, transparent 62px 67px,
+          #111 67px 70px, transparent 70px 76px,
+          #111 76px 84px, transparent 84px 90px,
+          #111 90px 94px, transparent 94px 100%);
+      background-size:100px 100%;
+      border-radius:4px;
+      opacity:.86;
+    }
+    .scan-light{
+      position:absolute;
+      inset:39px 12px 12px;
+      border-radius:6px;
+      background:linear-gradient(180deg, transparent, rgba(39,174,96,.18), transparent);
+      transform:translateY(-35px);
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .motion-ready .billing-window,
+    .motion-ready .bill-row,
+    .motion-ready .receipt-output,
+    .motion-ready .barcode-sticker,
+    .motion-ready .mini-action.is-hot{
+      opacity:0;
+    }
+    .motion-ready .phone-digits{ width:0; }
+    .motion-ready .reveal{
+      opacity:0;
+      transform:translateY(22px);
+      transition:opacity .75s ease, transform .75s ease;
+    }
+    .motion-ready .reveal.is-visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    section{ padding:72px 0; }
+    .section-head{
+      max-width:720px;
+      margin-bottom:24px;
+    }
+    .section-kicker{
+      margin:0 0 10px;
+      color:var(--green-dark);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .section-title{
+      margin:0;
+      font-size:clamp(30px, 4vw, 48px);
+      line-height:1.05;
+      letter-spacing:-.055em;
+      font-weight:900;
+    }
+    .section-sub{
+      margin:14px 0 0;
+      color:rgba(16,24,40,.66);
+      font-size:17px;
+      line-height:1.55;
+      font-weight:560;
+    }
+
+    .feature-grid{
+      display:grid;
+      gap:12px;
+    }
+    .feature-card{
+      min-height:220px;
+      padding:22px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:rgba(255,255,255,.82);
+      box-shadow:0 12px 30px rgba(16,24,40,.05);
+    }
+    .feature-icon{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:8px;
+      background:var(--surface-soft);
+      color:var(--text);
+      margin-bottom:22px;
+    }
+    .feature-card h3{
+      margin:0 0 9px;
+      font-size:21px;
+      line-height:1.16;
+      letter-spacing:-.04em;
+    }
+    .feature-card p{
+      margin:0;
+      color:rgba(16,24,40,.64);
+      font-size:14.5px;
+      line-height:1.58;
+      font-weight:560;
+    }
+    @media (min-width: 720px){
+      .feature-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+    }
+    @media (min-width: 1040px){
+      .feature-grid{ grid-template-columns:repeat(4, minmax(0, 1fr)); }
+    }
+
+    .workflow{
+      background:#101828;
+      color:#fff;
+    }
+    .workflow .section-kicker{ color:#7ce3a2; }
+    .workflow .section-sub{ color:rgba(255,255,255,.68); }
+    .workflow-grid{
+      display:grid;
+      gap:12px;
+      margin-top:28px;
+    }
+    .step-card{
+      padding:20px;
+      min-height:170px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:8px;
+      background:rgba(255,255,255,.06);
+    }
+    .step-num{
+      width:32px;
+      height:32px;
+      display:grid;
+      place-items:center;
+      border-radius:999px;
+      background:#fff;
+      color:#101828;
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:28px;
+    }
+    .step-card h3{
+      margin:0 0 8px;
+      font-size:18px;
+      letter-spacing:-.03em;
+    }
+    .step-card p{
+      margin:0;
+      color:rgba(255,255,255,.68);
+      line-height:1.55;
+      font-size:14px;
+      font-weight:540;
+    }
+    @media (min-width: 760px){
+      .workflow-grid{ grid-template-columns:repeat(4, minmax(0, 1fr)); }
+    }
+
+    .split-section{
+      display:grid;
+      gap:28px;
       align-items:center;
     }
-    .menu-nav a{
+    .recurring-panel{
+      display:grid;
+      gap:10px;
+      padding:16px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      box-shadow:var(--soft-shadow);
+    }
+    .plan-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fbfcfc;
+    }
+    .plan-row strong{
+      display:block;
+      font-size:14px;
+    }
+    .plan-row span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:700;
+    }
+    .plan-price{
+      color:var(--green-dark);
       font-weight:900;
-      letter-spacing:-.2px;
-      text-decoration:none;
-      font-size: 20px;
-      color: rgba(16,24,40,.35);
-      padding: 6px 14px;
-      border-radius: 999px;
+      white-space:nowrap;
     }
-    .menu-nav a.active{ color: rgba(16,24,40,.92); }
-    .menu-nav a:hover{ background: rgba(255,255,255,.55); }
+    @media (min-width: 900px){
+      .split-section{ grid-template-columns:.9fr 1fr; }
+    }
 
-    .menu-nav .login-link{
-      margin-top: 8px;
-      font-size: 12px;
-      font-weight: 900;
-      color: rgba(16,24,40,.55);
+    .pricing-panel{
+      display:grid;
+      gap:22px;
+      align-items:center;
+      padding:24px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      box-shadow:var(--soft-shadow);
     }
-    .menu-nav .menu-cta{
-      margin-top: 10px;
-      width: 230px;
-      height: 44px;
-      border-radius: 999px;
-      border: 0;
-      background: #2f49ff;
-      color: white;
-      font-weight: 900;
-      box-shadow: 0 12px 24px rgba(47,73,255,.22);
-      cursor:pointer;
-      text-decoration:none;
+    .pricing-copy{
+      max-width:620px;
+    }
+    .pricing-card{
+      padding:20px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fbfcfc;
+    }
+    .pricing-badge{
       display:inline-flex;
       align-items:center;
-      justify-content:center;
+      min-height:30px;
+      padding:6px 10px;
+      border:1px solid #c8efd5;
+      border-radius:999px;
+      background:#effbf4;
+      color:var(--green-dark);
+      font-size:12px;
+      font-weight:900;
     }
-    .menu-foot{
-      padding: 12px 0 18px;
-      font-size: 11px;
-      color: rgba(16,24,40,.40);
+    .price{
+      margin:16px 0 14px;
+      color:var(--text);
+      font-size:clamp(42px, 5vw, 62px);
+      line-height:1;
+      letter-spacing:-.055em;
+      font-weight:900;
+    }
+    .price span{
+      margin-left:4px;
+      color:rgba(16,24,40,.58);
+      font-size:18px;
+      letter-spacing:0;
+      font-weight:850;
+    }
+    .pricing-list{
+      display:grid;
+      gap:10px;
+      margin:0 0 18px;
+      padding:0;
+      list-style:none;
+    }
+    .pricing-list li{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      color:rgba(16,24,40,.72);
+      font-size:14px;
+      line-height:1.45;
+      font-weight:720;
+    }
+    .pricing-list .i{
+      flex:0 0 auto;
+      color:var(--green-dark);
+      margin-top:1px;
+    }
+    .pricing-list a{
+      color:var(--green-dark);
+      font-weight:900;
+      text-decoration:none;
+    }
+    .pricing-list a:hover{ text-decoration:underline; }
+    @media (min-width: 840px){
+      .pricing-panel{ grid-template-columns:1fr minmax(300px, 380px); }
+    }
+
+    .download-panel{
+      padding:22px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      box-shadow:var(--soft-shadow);
+    }
+    .download-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:16px;
+    }
+    .detected-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      min-height:34px;
+      padding:7px 11px;
+      border-radius:999px;
+      background:#effbf4;
+      color:var(--green-dark);
+      border:1px solid #c8efd5;
+      font-size:12px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+    .store-links{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin:18px 0;
+    }
+    .store-badge{
+      display:inline-flex;
+      border-radius:8px;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .store-badge:hover{
+      transform:translateY(-1px);
+      box-shadow:0 10px 22px rgba(16,24,40,.12);
+    }
+    .store-badge img{
+      display:block;
+      height:42px;
+      width:auto;
+    }
+    .download-grid{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+    .download-card{
+      min-height:74px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fbfcfc;
+      text-decoration:none;
+      transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .download-card:hover{
+      transform:translateY(-1px);
+      border-color:#bfe9ce;
+      box-shadow:0 12px 24px rgba(16,24,40,.08);
+    }
+    .download-card.is-recommended{
+      border-color:#a7e4bd;
+      background:#f1fbf5;
+    }
+    .download-icon{
+      width:40px;
+      height:40px;
+      display:grid;
+      place-items:center;
+      border-radius:8px;
+      background:#fff;
+      color:var(--text);
+      border:1px solid var(--line);
+      flex:0 0 auto;
+    }
+    .download-copy{
+      flex:1;
+      min-width:0;
+    }
+    .download-name,
+    .download-meta{
+      display:block;
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+    }
+    .download-name{
+      font-size:14px;
+      font-weight:900;
+    }
+    .download-meta{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:750;
+    }
+    .download-tag{
+      display:none;
+      padding:5px 8px;
+      border-radius:999px;
+      background:var(--green);
+      color:#fff;
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+    .download-card.is-recommended .download-tag{ display:inline-flex; }
+    @media (min-width: 760px){
+      .download-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+    }
+
+    .faq-grid{
+      display:grid;
+      gap:10px;
+    }
+    details{
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      padding:0 16px;
+    }
+    summary{
+      min-height:58px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      cursor:pointer;
+      font-weight:850;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    summary::after{
+      content:"+";
+      color:var(--green-dark);
+      font-size:22px;
+      font-weight:700;
+    }
+    details[open] summary::after{ content:"-"; }
+    details p{
+      margin:0;
+      padding:0 0 16px;
+      color:rgba(16,24,40,.64);
+      line-height:1.58;
+      font-size:14.5px;
+      font-weight:540;
+    }
+
+    .final-cta{
+      padding:42px 24px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      text-align:center;
+      box-shadow:var(--soft-shadow);
+    }
+    .final-cta h2{
+      margin:0;
+      font-size:clamp(30px, 4vw, 48px);
+      letter-spacing:-.055em;
+      line-height:1.06;
+    }
+    .final-cta p{
+      max-width:610px;
+      margin:14px auto 24px;
+      color:rgba(16,24,40,.66);
+      line-height:1.55;
+      font-weight:560;
+    }
+
+    footer{
+      padding:34px 0 46px;
+      border-top:1px solid var(--line);
+      color:rgba(16,24,40,.58);
+      font-size:13px;
+      font-weight:650;
+    }
+    .footer-grid{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .foot-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+    .foot-links a{
+      text-decoration:none;
+      color:rgba(16,24,40,.68);
+      font-weight:800;
     }
 
     .i{ width:18px; height:18px; }
     .i.sm{ width:16px; height:16px; }
     .i.lg{ width:20px; height:20px; }
+
+    @media (max-width: 979px){
+      .hero{
+        min-height:auto;
+        padding:44px 0 36px;
+      }
+      .story-stage{
+        min-height:520px;
+        width:100%;
+        justify-self:stretch;
+        left:auto;
+      }
+      .billing-window{
+        transform:none;
+      }
+      .receipt-output{
+        right:0;
+        bottom:-8px;
+      }
+      .barcode-sticker{
+        left:0;
+        bottom:-10px;
+      }
+    }
+    @media (max-width: 620px){
+      .container{ width:min(100% - 24px, var(--container)); }
+      h1{ font-size:clamp(40px, 13vw, 58px); }
+      section{ padding:52px 0; }
+      .hero-actions .btn{
+        width:100%;
+      }
+      .story-stage{
+        min-height:auto;
+        display:grid;
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+        gap:12px;
+        align-items:start;
+      }
+      .billing-window{
+        grid-column:1 / -1;
+        width:100%;
+      }
+      .action-row{
+        grid-template-columns:1fr;
+      }
+      .receipt-output,
+      .barcode-sticker{
+        position:relative;
+        z-index:3;
+        inset:auto;
+        width:100%;
+        align-self:stretch;
+      }
+      .receipt-output{
+        grid-column:2;
+        grid-row:2;
+      }
+      .barcode-sticker{
+        grid-column:1;
+        grid-row:2;
+        transform:rotate(-2deg);
+      }
+      .download-top{
+        display:grid;
+      }
+      .store-badge img{ height:40px; }
+    }
   </style>
 
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Billcorn",
-      "operatingSystem": "Android, iOS, Web",
-      "applicationCategory": "BusinessApplication",
-      "description": "Smart invoicing, inventory, and effortless shop management.",
-      "featureList": [
-        "One-Click Bill Generation",
-        "Inventory Management",
-        "Barcode Scanning",
-        "Real-time Activity Tracking"
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Billcorn",
+          "url": "https://billcorn.com/",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Android, iOS, macOS, Windows, Linux, Web",
+          "description": "Billing software for shops to create bills instantly, share invoice links on WhatsApp, save paper, print receipts, scan barcodes, create barcode labels, track payments, and manage recurring billing.",
+          "featureList": [
+            "Instant bill generation without inventory setup",
+            "WhatsApp invoice link sharing without saving customer contacts",
+            "Paper-saving public bill links",
+            "Thermal printer and A4 invoice printing",
+            "Barcode scanning and custom barcode generation",
+            "One-time purchase billing",
+            "Recurring subscription billing",
+            "Paid and unpaid bill tracking"
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": "1999",
+            "priceCurrency": "INR",
+            "description": "One yearly plan at ₹1,999/year. Create 10 sample bills with a watermark before starting a 1 month free trial or subscribing. The paid plan includes unlimited bill generations and 3 active sessions across devices.",
+            "availability": "https://schema.org/InStock"
+          },
+          "sameAs": [
+            "https://apps.apple.com/app/billcorn/id6758623792",
+            "https://play.google.com/store/apps/details?id=com.billcorn.app"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Can I create a bill without adding inventory first?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Billcorn is designed so sellers can start billing immediately without importing inventory first."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I send a bill on WhatsApp without saving the customer number?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Enter the customer number and Billcorn opens WhatsApp for that number with a shareable bill link, so you can send the bill without creating a contact first."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Billcorn support thermal printers?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Billcorn supports thermal printer receipts and regular A4 invoice printing."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I create barcode labels for products?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Sellers can create barcodes for products without existing barcodes, print labels, stick them, and scan them while billing."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How much does Billcorn cost?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Billcorn has one plan at ₹1,999/year. You can create 10 sample bills with a watermark before starting a 1 month free trial or subscribing. The paid plan includes unlimited bill generation and 3 active sessions across devices."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can Billcorn handle recurring billing?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Billcorn supports recurring or subscription-style billing for hourly, daily, weekly, monthly, or yearly services."
+              }
+            }
+          ]
+        }
       ]
     }
   </script>
@@ -718,289 +1219,629 @@
 
 <body>
   <div class="page">
-    <div class="wrap">
-      <div class="app" id="app">
-        <div class="content">
+    <header class="topbar">
+      <div class="container">
+        <div class="nav-shell">
+          <a class="brand" href="/" aria-label="Billcorn home">
+            <img src="brand-logo.svg" alt="Billcorn billing software logo" width="40" height="40">
+            <span>Billcorn</span>
+          </a>
 
-          <!-- Header -->
-          <header class="topbar">
-            <a class="brand" href="/" aria-label="Billcorn Home">
-            <img src="brand-logo.svg" alt="Billcorn billing software logo - colorful dots forming B letter" width="40" height="40">
-              <span>Billcorn</span>
-            </a>
+          <nav class="nav-links" aria-label="Primary">
+            <a href="#features">Features</a>
+            <a href="#workflow">How it works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#downloads">Downloads</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+          </nav>
 
-            <!-- Desktop nav -->
-            <nav class="nav" aria-label="Primary">
-              <a href="#home">Home</a>
-              <a href="#features">Features</a>
-              <a href="#contact">Contact</a>
-            </nav>
+          <div class="nav-actions">
+            <a class="btn btn-soft" href="https://portal.billcorn.com/login">Login</a>
+            <a class="btn btn-primary" href="https://portal.billcorn.com/signup">Start billing free</a>
+          </div>
 
-            <!-- Desktop CTA -->
-            <div class="header-actions">
-              <a class="btn btn-primary" href="https://portal.billcorn.com/signup">
-                <i class="i sm" data-lucide="sparkles"></i> Get Started
-              </a>
-            </div>
+          <button class="menu-toggle" id="openMenu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            <i class="i lg" data-lucide="menu"></i>
+          </button>
+        </div>
 
-            <!-- Mobile menu button -->
-            <button class="menu-btn" id="openMenu" type="button"
-              aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-              <i class="i lg" data-lucide="menu"></i>
-            </button>
-          </header>
-
-          <!-- Hero -->
-          <section class="hero anchor" id="home">
-            <div class="hero-grid">
-              <div>
-                <div class="badge"><span class="dot"></span> V1.0 RELEASED</div>
-
-                <h1>The Power of <span class="accent">Simplicity</span></h1>
-
-                <p class="lead">
-                  Billing made beautiful. Stop wrestling with spreadsheets and start managing your shop with ease.
-                </p>
-
-                <div class="hero-actions">
-                  <!-- FIX: button -> anchor so it actually navigates -->
-                  <a class="btn btn-secondary" href="https://portal.billcorn.com/login">
-                    <i class="i sm" data-lucide="log-in"></i>
-                    Login
-                  </a>
-                </div>
-
-                <div class="store-links" aria-label="Download Billcorn">
-                  <a class="store-badge" href="https://apps.apple.com/us/app/billcorn/id6758623792" target="_blank" rel="noopener noreferrer" aria-label="Download Billcorn on the App Store for iPhone and iPad">
-                    <img src="app-store-badge-black.png" alt="Download on the App Store">
-                  </a>
-                  <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.billcorn.app" target="_blank" rel="noopener noreferrer" aria-label="Get Billcorn on Google Play">
-                    <img src="GetItOnGooglePlay_Badge_Web_color_English.png" alt="Get it on Google Play">
-                  </a>
-                  <a class="store-badge" href="https://apps.apple.com/us/app/billcorn/id6758623792" target="_blank" rel="noopener noreferrer" aria-label="Download Billcorn for Mac from the App Store">
-                    <img src="mac-app-store-badge-black.png" alt="Download on the Mac App Store">
-                  </a>
-                </div>
-              </div>
-
-              <div class="rainbow" aria-label="Recent activity">
-                <div class="activity">
-                  <div class="icon-chip" aria-hidden="true">
-                    <i class="i sm" data-lucide="receipt"></i>
-                  </div>
-
-                  <div class="bill">
-                    <div class="pill">RECENT ACTIVITY</div>
-                    <div class="title">Bill #042</div>
-                    <div class="sub">Paid by Jane Doe</div>
-                  </div>
-
-                  <div class="amount">+₹124.00</div>
-                  <div style="opacity:.55; font-weight:900; padding-left:4px;">···</div>
-                </div>
-              </div>
-
-            </div>
-          </section>
-
-          <!-- Features -->
-          <section class="anchor" id="features">
-            <h2 class="section-title">Effortless Management</h2>
-            <p class="section-sub">Designed to save you time with smart automation and clean interfaces.</p>
-
-            <div class="features-grid">
-              <article class="feature">
-                <div class="mock blue">
-                  <div class="chip-btn">
-                    <span class="chip-icon" aria-hidden="true">
-                      <i class="i sm" data-lucide="send"></i>
-                    </span>
-                    Send Bill
-                  </div>
-                </div>
-                <h3>One-Click Bill generation</h3>
-                <p>Send Bills in seconds, not minutes. Simplified UI for maximum speed.</p>
-              </article>
-
-              <article class="feature">
-                <div class="mock yellow">
-                  <div class="mini-icon" aria-hidden="true">
-                    <i class="i" data-lucide="scan-line"></i>
-                  </div>
-                </div>
-                <h3>Scan to Add</h3>
-                <p>Inventory in your pocket. Just point your camera to scan and add items.</p>
-              </article>
-            </div>
-          </section>
-
-          <!-- CTA -->
-          <section class="anchor" id="get-started">
-            <div class="cta">
-              <div class="cta-inner">
-                <h2>Ready to start?</h2>
-
-                <!-- FIX: button -> anchor so it navigates -->
-                <a class="btn btn-primary" href="https://portal.billcorn.com/signup">
-                  Get Started <i class="i sm" data-lucide="arrow-right"></i>
-                </a>
-              </div>
-            </div>
-          </section>
-
-          <!-- Footer -->
-          <footer class="anchor" id="contact">
-            <div class="foot-brand">Billcorn</div>
-            <div style="font-size:11px;">© 2026 Billcorn. All rights reserved.</div>
-
-            <div class="foot-links">
-              <a href="/privacy.html">Privacy</a>
-              <a href="/terms.html">Terms</a>
-
-              <!-- FIX: mailto -->
-              <a href="mailto:contact@billcorn.com">contact@billcorn.com</a>
-            </div>
-
-            <div class="social" aria-label="Social links">
-              <!-- REMOVED X -->
-              <!-- LinkedIn company link (update slug if needed) -->
-              <a href="https://www.linkedin.com/company/billcorn/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-                <i class="i sm" data-lucide="linkedin"></i>
-              </a>
-            </div>
-          </footer>
-
+        <div class="mobile-menu" id="mobileMenu">
+          <nav aria-label="Mobile">
+            <a href="#features" data-close-menu>Features</a>
+            <a href="#workflow" data-close-menu>How it works</a>
+            <a href="#pricing" data-close-menu>Pricing</a>
+            <a href="#downloads" data-close-menu>Downloads</a>
+            <a href="#faq" data-close-menu>FAQ</a>
+            <a href="https://portal.billcorn.com/login" data-close-menu>Login</a>
+            <a href="https://portal.billcorn.com/signup" data-close-menu>Start billing free</a>
+          </nav>
         </div>
       </div>
-    </div>
+    </header>
+
+    <main>
+      <section class="hero anchor" id="home">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Fast billing for shops and retailers</p>
+            <h1>Billing software for shops that need receipts fast</h1>
+            <p class="hero-lead">
+              Create bills instantly, share paper-saving bill links on WhatsApp without saving contacts, print receipts when needed, scan barcodes, and manage one-time or recurring sales.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://portal.billcorn.com/signup">
+                Start billing free <i class="i sm" data-lucide="arrow-right"></i>
+              </a>
+              <a class="btn btn-soft" href="#downloads">
+                Download app <i class="i sm" data-lucide="download"></i>
+              </a>
+            </div>
+
+            <div class="hero-proof" aria-label="Billcorn core capabilities">
+              <span><i class="i sm" data-lucide="receipt"></i> Bills without setup</span>
+              <span><i class="i sm" data-lucide="message-circle"></i> WhatsApp invoices</span>
+              <span><i class="i sm" data-lucide="leaf"></i> Paper-saving links</span>
+              <span><i class="i sm" data-lucide="printer"></i> Thermal or A4 print</span>
+            </div>
+          </div>
+
+          <div class="story-stage" aria-label="Animated Billcorn billing workflow">
+            <div class="billing-window">
+              <div class="window-bar">
+                <div class="traffic" aria-hidden="true"><span></span><span></span><span></span></div>
+                <div class="window-title">Billcorn checkout</div>
+                <i class="i sm" data-lucide="shield-check" aria-hidden="true"></i>
+              </div>
+
+              <div class="billing-body">
+                <div class="checkout-head">
+                  <div>
+                    <h2>New bill</h2>
+                    <p>No inventory import needed</p>
+                  </div>
+                  <div class="total-pill"><span>Total</span>₹842</div>
+                </div>
+
+                <div class="scan-strip">
+                  <i class="i sm" data-lucide="scan-barcode"></i>
+                  Scan, type, or add item instantly
+                </div>
+
+                <div class="bill-list">
+                  <div class="bill-row anim-line">
+                    <span class="qty">2x</span>
+                    <span><span class="item-name">Rice bag</span><span class="item-code">BR-2048 scanned</span></span>
+                    <span class="item-price">₹520</span>
+                  </div>
+                  <div class="bill-row anim-line">
+                    <span class="qty">1x</span>
+                    <span><span class="item-name">Soap pack</span><span class="item-code">Barcode created</span></span>
+                    <span class="item-price">₹92</span>
+                  </div>
+                  <div class="bill-row anim-line">
+                    <span class="qty">1x</span>
+                    <span><span class="item-name">Premium plan</span><span class="item-code">Monthly recurring</span></span>
+                    <span class="item-price">₹230</span>
+                  </div>
+                </div>
+
+                <div class="customer-strip">
+                  <div class="input-label"><i class="i sm" data-lucide="phone"></i> Customer number</div>
+                  <div class="phone-line">
+                    <span class="phone-digits">+91 98765 43210</span>
+                  </div>
+                </div>
+
+                <div class="action-row">
+                  <div class="mini-action is-hot whatsapp-action"><i class="i sm" data-lucide="message-circle"></i> WhatsApp</div>
+                  <div class="mini-action print-action"><i class="i sm" data-lucide="printer"></i> Print</div>
+                  <div class="mini-action paid-action"><i class="i sm" data-lucide="check-circle-2"></i> Paid</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="receipt-output" aria-hidden="true">
+              <h3>Billcorn</h3>
+              <div class="receipt-line"></div>
+              <div class="receipt-line"></div>
+              <div class="receipt-line short"></div>
+              <div class="receipt-total"><span>Total</span><span>₹842</span></div>
+            </div>
+
+            <div class="barcode-sticker" aria-hidden="true">
+              <div class="barcode-label">Barcode label ready</div>
+              <div class="barcode-bars"></div>
+              <div class="scan-light"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="anchor" id="features">
+        <div class="container">
+          <div class="section-head reveal">
+            <p class="section-kicker">Billing software that gets out of the way</p>
+            <h2 class="section-title">Everything a seller needs at the counter.</h2>
+            <p class="section-sub">
+              Billcorn focuses on the few moments that slow shops down: making the bill, sending it, printing it, and finding the product again next time.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card reveal">
+              <div class="feature-icon"><i class="i" data-lucide="zap"></i></div>
+              <h3>Instant billing</h3>
+              <p>Create bills without uploading inventory first. Scan, type, or add items and finish the sale while the customer waits.</p>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="feature-icon"><i class="i" data-lucide="message-circle"></i></div>
+              <h3>WhatsApp invoices</h3>
+              <p>Enter a customer number and open WhatsApp directly with a bill link, even when the number is not saved as a contact.</p>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="feature-icon"><i class="i" data-lucide="leaf"></i></div>
+              <h3>Share links, save paper</h3>
+              <p>Send customers a bill link first and print only when they need a physical receipt.</p>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="feature-icon"><i class="i" data-lucide="repeat"></i></div>
+              <h3>Recurring billing</h3>
+              <p>Bill for services and plans by hour, day, week, month, or year, alongside normal one-time purchase bills.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="workflow anchor" id="workflow">
+        <div class="container">
+          <div class="section-head reveal">
+            <p class="section-kicker">Barcode-ready checkout</p>
+            <h2 class="section-title">Make every product scannable.</h2>
+            <p class="section-sub">
+              Products with no barcode do not have to slow down billing. Create a label once, stick it, and scan it every time after that.
+            </p>
+          </div>
+
+          <div class="workflow-grid">
+            <article class="step-card reveal">
+              <div class="step-num">1</div>
+              <h3>Scan existing barcode</h3>
+              <p>Add products to the bill as soon as the code is scanned.</p>
+            </article>
+            <article class="step-card reveal">
+              <div class="step-num">2</div>
+              <h3>Create missing code</h3>
+              <p>Generate a barcode for products that came without one.</p>
+            </article>
+            <article class="step-card reveal">
+              <div class="step-num">3</div>
+              <h3>Print and stick</h3>
+              <p>Make barcode labels and place them directly on items.</p>
+            </article>
+            <article class="step-card reveal">
+              <div class="step-num">4</div>
+              <h3>Bill faster next time</h3>
+              <p>Scan the label and complete checkout in seconds.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="anchor">
+        <div class="container split-section">
+          <div class="section-head reveal">
+            <p class="section-kicker">Customer billing examples</p>
+            <h2 class="section-title">Sell products once. Bill services again and again.</h2>
+            <p class="section-sub">
+              Use one-time purchase bills for retail sales and recurring bills for customer services, memberships, premium plans, rentals, repairs, and other repeat work.
+            </p>
+          </div>
+
+          <div class="recurring-panel reveal" aria-label="Customer bill examples">
+            <div class="plan-row">
+              <div><strong>Customer premium plan</strong><span>Example monthly customer bill</span></div>
+              <div class="plan-price">₹499/mo</div>
+            </div>
+            <div class="plan-row">
+              <div><strong>Repair support bill</strong><span>Example hourly customer bill</span></div>
+              <div class="plan-price">₹250/hr</div>
+            </div>
+            <div class="plan-row">
+              <div><strong>Retail sale bill</strong><span>Example one-time customer bill</span></div>
+              <div class="plan-price">₹842</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="anchor" id="pricing">
+        <div class="container">
+          <div class="pricing-panel reveal">
+            <div class="pricing-copy">
+              <p class="section-kicker">Pricing</p>
+              <h2 class="section-title">One simple plan for your shop.</h2>
+              <p class="section-sub">
+                Create 10 sample bills with a watermark first. After that, start a 1 month free trial or subscribe to the yearly plan.
+              </p>
+            </div>
+
+            <div class="pricing-card" aria-label="Billcorn yearly plan">
+              <div class="pricing-badge">10 samples, then free trial</div>
+              <div class="price">₹1,999<span>/year</span></div>
+              <ul class="pricing-list">
+                <li><i class="i" data-lucide="file-check-2"></i><span>10 sample bills with watermark before trial</span></li>
+                <li><i class="i" data-lucide="calendar-check"></i><span>1 month free trial when you are ready</span></li>
+                <li><i class="i" data-lucide="receipt"></i><span>Unlimited bill generations after subscription</span></li>
+                <li><i class="i" data-lucide="monitor-check"></i><span>3 active sessions across devices</span></li>
+                <li><i class="i" data-lucide="users"></i><span>Need more seats? <a href="mailto:contact@billcorn.com">Contact support</a></span></li>
+              </ul>
+              <a class="btn btn-green" href="https://portal.billcorn.com/signup">
+                Start billing free <i class="i sm" data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="anchor" id="downloads">
+        <div class="container">
+          <div class="download-panel reveal">
+            <div class="download-top">
+              <div>
+                <p class="section-kicker">Download Billcorn</p>
+                <h2 class="section-title">Use it on mobile, Mac, Windows, or Linux.</h2>
+                <p class="section-sub">Pick the app for your device. Desktop downloads automatically highlight the best installer for your system.</p>
+              </div>
+              <div class="detected-pill" id="detectedPlatform">
+                <i class="i sm" data-lucide="monitor-check"></i>
+                <span>Detecting...</span>
+              </div>
+            </div>
+
+            <div class="store-links" aria-label="Mobile and Mac app downloads">
+              <a class="store-badge" href="https://apps.apple.com/us/app/billcorn/id6758623792" target="_blank" rel="noopener noreferrer" aria-label="Download Billcorn on the App Store for iPhone and iPad">
+                <img src="app-store-badge-black.png" alt="Download on the App Store">
+              </a>
+              <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.billcorn.app" target="_blank" rel="noopener noreferrer" aria-label="Get Billcorn on Google Play">
+                <img src="GetItOnGooglePlay_Badge_Web_color_English.png" alt="Get it on Google Play">
+              </a>
+              <a class="store-badge" href="https://apps.apple.com/us/app/billcorn/id6758623792" target="_blank" rel="noopener noreferrer" aria-label="Download Billcorn for Mac from the App Store">
+                <img src="mac-app-store-badge-black.png" alt="Download on the Mac App Store">
+              </a>
+            </div>
+
+            <div class="download-grid" id="desktopDownloadGrid" aria-label="Windows and Linux downloads"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="anchor" id="faq">
+        <div class="container">
+          <div class="section-head reveal">
+            <p class="section-kicker">FAQ</p>
+            <h2 class="section-title">Quick answers before you try it.</h2>
+          </div>
+
+          <div class="faq-grid">
+            <details class="reveal">
+              <summary>How much does Billcorn cost?</summary>
+              <p>Billcorn has one plan at ₹1,999/year. You can create 10 sample bills with a watermark before starting a 1 month free trial or subscribing. The paid plan includes unlimited bill generation and 3 active sessions across devices.</p>
+            </details>
+            <details class="reveal">
+              <summary>Can I create a bill without adding inventory first?</summary>
+              <p>Yes. Billcorn is made for fast billing, so you can create a bill immediately without importing inventory first.</p>
+            </details>
+            <details class="reveal">
+              <summary>Can I send a bill on WhatsApp without saving the number?</summary>
+              <p>Yes. Enter the customer number and Billcorn opens WhatsApp for that number with a shareable bill link, so you do not have to create a contact first.</p>
+            </details>
+            <details class="reveal">
+              <summary>Does Billcorn support thermal printer invoices?</summary>
+              <p>Yes. You can print receipts on thermal printers and also print regular A4 invoices when needed.</p>
+            </details>
+            <details class="reveal">
+              <summary>Can I create barcode labels?</summary>
+              <p>Yes. Create barcodes for products without existing codes, print labels, stick them, and scan them during checkout.</p>
+            </details>
+            <details class="reveal">
+              <summary>Can I generate recurring or subscription bills?</summary>
+              <p>Yes. Billcorn supports recurring billing for services and plans measured by hour, day, week, month, or year.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="final-cta reveal">
+            <h2>Start billing before your next customer leaves the counter.</h2>
+            <p>Billcorn keeps the workflow short: add items, enter the customer number, share a paper-saving link or print, and move to the next sale.</p>
+            <a class="btn btn-green" href="https://portal.billcorn.com/signup">
+              Start billing free <i class="i sm" data-lucide="arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="anchor" id="contact">
+      <div class="container footer-grid">
+        <div>
+          <strong>Billcorn</strong>
+          <div>&copy; 2026 Billcorn. All rights reserved.</div>
+        </div>
+
+        <div class="foot-links">
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="mailto:contact@billcorn.com">contact@billcorn.com</a>
+          <a href="https://www.linkedin.com/company/billcorn/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
   </div>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="menu-overlay" id="mobileMenu" aria-hidden="true">
-    <div class="menu-backdrop" id="menuBackdrop"></div>
-
-    <div class="menu-sheet" role="dialog" aria-modal="true" aria-label="Menu">
-      <div class="menu-top">
-        <a class="brand" href="#home" aria-label="Billcorn Home" data-close>
-          <img src="brand-logo.svg" alt="Billcorn logo">
-          <span>Billcorn</span>
-        </a>
-
-        <button class="close-btn" id="closeMenu" type="button" aria-label="Close menu">
-          <i class="i lg" data-lucide="x"></i>
-        </button>
-      </div>
-
-      <div class="menu-center">
-        <nav class="menu-nav" aria-label="Mobile">
-          <a class="active" href="#home" data-close>Home</a>
-          <a href="#features" data-close>Features</a>
-
-          <!-- FIX: contact mail -->
-          <a href="mailto:contact@billcorn.com" class="login-link" data-close>contact@billcorn.com</a>
-
-          <!-- FIX: login + signup -->
-          <a class="login-link" href="https://portal.billcorn.com/login" data-close>Login</a>
-
-          <!-- FIX: button -> anchor -->
-          <a class="menu-cta" href="https://portal.billcorn.com/signup" data-close>Get Started</a>
-        </nav>
-      </div>
-
-      <div class="menu-foot">© 2026 Billcorn</div>
-    </div>
-  </div>
-
-  <!-- Lucide (open-source icon pack) -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
   <script>
-    lucide.createIcons();
+    const DESKTOP_RELEASE_VERSION = '1.0.0';
+    const DESKTOP_DOWNLOAD_BASE = 'https://github.com/billcorn/desktop-releases/releases/latest/download/';
 
-    const openBtn = document.getElementById('openMenu');
-    const closeBtn = document.getElementById('closeMenu');
-    const overlay = document.getElementById('mobileMenu');
-    const backdrop = document.getElementById('menuBackdrop');
+    const desktopDownloads = [
+      {
+        id: 'windows-setup',
+        name: 'Windows installer',
+        meta: 'Setup EXE',
+        icon: 'monitor',
+        file: `Billcorn.Setup.${DESKTOP_RELEASE_VERSION}.exe`
+      },
+      {
+        id: 'windows-portable',
+        name: 'Windows portable',
+        meta: 'EXE app',
+        icon: 'monitor',
+        file: `Billcorn.${DESKTOP_RELEASE_VERSION}.exe`
+      },
+      {
+        id: 'linux-deb',
+        name: 'Linux Debian',
+        meta: 'DEB package',
+        icon: 'terminal',
+        file: `billcorn_${DESKTOP_RELEASE_VERSION}_amd64.deb`
+      },
+      {
+        id: 'linux-appimage',
+        name: 'Linux AppImage',
+        meta: 'Portable AppImage',
+        icon: 'terminal',
+        file: `Billcorn-${DESKTOP_RELEASE_VERSION}.AppImage`
+      }
+    ];
 
-    let lastFocus = null;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function getFocusable(el){
-      return [...el.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])')]
-        .filter(n => !n.hasAttribute('disabled'));
+    function detectDesktopPlatform(){
+      const platform = [
+        navigator.userAgentData?.platform,
+        navigator.platform,
+        navigator.userAgent
+      ].filter(Boolean).join(' ').toLowerCase();
+
+      if (platform.includes('win')) {
+        return { id: 'windows-setup', label: 'Windows detected' };
+      }
+
+      if (platform.includes('linux') || platform.includes('x11')) {
+        return { id: 'linux-deb', label: 'Linux detected' };
+      }
+
+      if (platform.includes('mac') || platform.includes('iphone') || platform.includes('ipad')) {
+        return { id: '', label: 'Mac App Store' };
+      }
+
+      return { id: '', label: 'Choose installer' };
     }
 
-    function openMenu(){
-      if (window.matchMedia('(min-width: 1024px)').matches) return;
-
-      lastFocus = document.activeElement;
-      overlay.classList.add('active');
-      overlay.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('menu-open');
-      openBtn.setAttribute('aria-expanded', 'true');
-
-      const focusables = getFocusable(overlay);
-      (focusables[0] || closeBtn).focus();
+    function desktopDownloadUrl(file){
+      return DESKTOP_DOWNLOAD_BASE + encodeURIComponent(file);
     }
 
-    function closeMenu(){
-      overlay.classList.remove('active');
-      overlay.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('menu-open');
-      openBtn.setAttribute('aria-expanded', 'false');
+    function renderDesktopDownloads(){
+      const grid = document.getElementById('desktopDownloadGrid');
+      const detectedPlatform = document.getElementById('detectedPlatform');
+      if (!grid || !detectedPlatform) return;
 
-      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      const detected = detectDesktopPlatform();
+      detectedPlatform.querySelector('span').textContent = detected.label;
+
+      const downloads = [...desktopDownloads].sort((a, b) => {
+        return Number(b.id === detected.id) - Number(a.id === detected.id);
+      });
+
+      grid.innerHTML = downloads.map((item) => {
+        const isRecommended = item.id === detected.id;
+        const label = isRecommended
+          ? `Download Billcorn ${item.name}, recommended for your system`
+          : `Download Billcorn ${item.name}`;
+
+        return `
+          <a class="download-card${isRecommended ? ' is-recommended' : ''}" href="${desktopDownloadUrl(item.file)}" target="_blank" rel="noopener noreferrer" aria-label="${label}">
+            <span class="download-icon" aria-hidden="true">
+              <i class="i sm" data-lucide="${item.icon}"></i>
+            </span>
+            <span class="download-copy">
+              <span class="download-name">${item.name}</span>
+              <span class="download-meta">${item.meta} - v${DESKTOP_RELEASE_VERSION}</span>
+            </span>
+            <span class="download-tag">Best pick</span>
+          </a>
+        `;
+      }).join('');
     }
 
-    openBtn.addEventListener('click', openMenu);
-    closeBtn.addEventListener('click', closeMenu);
-    backdrop.addEventListener('click', closeMenu);
+    function initMenu(){
+      const openBtn = document.getElementById('openMenu');
+      const menu = document.getElementById('mobileMenu');
+      if (!openBtn || !menu) return;
 
-    window.addEventListener('keydown', (e) => {
-      if (!overlay.classList.contains('active')) return;
+      openBtn.addEventListener('click', () => {
+        const isOpen = menu.classList.toggle('is-open');
+        openBtn.setAttribute('aria-expanded', String(isOpen));
+        openBtn.innerHTML = `<i class="i lg" data-lucide="${isOpen ? 'x' : 'menu'}"></i>`;
+        if (window.lucide) lucide.createIcons();
+      });
 
-      if (e.key === 'Escape') closeMenu();
+      menu.addEventListener('click', (event) => {
+        if (!event.target.closest('[data-close-menu]')) return;
+        menu.classList.remove('is-open');
+        openBtn.setAttribute('aria-expanded', 'false');
+        openBtn.innerHTML = '<i class="i lg" data-lucide="menu"></i>';
+        if (window.lucide) lucide.createIcons();
+      });
+    }
 
-      if (e.key === 'Tab') {
-        const focusables = getFocusable(overlay);
-        if (!focusables.length) return;
-
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+    function initReveal(){
+      const revealItems = document.querySelectorAll('.reveal');
+      if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+        revealItems.forEach((item) => item.classList.add('is-visible'));
+        return;
       }
-    });
 
-    overlay.addEventListener('click', (e) => {
-      const t = e.target.closest('[data-close]');
-      if (!t) return;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: .16 });
 
-      if (t.tagName.toLowerCase() === 'a') {
-        const href = t.getAttribute('href') || '';
-        if (href.startsWith('#')) {
-          e.preventDefault();
-          closeMenu();
-          setTimeout(() => {
-            document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 120);
-        } else {
-          closeMenu();
-        }
-      } else {
-        closeMenu();
+      revealItems.forEach((item) => observer.observe(item));
+    }
+
+    let heroAnimationStarted = false;
+
+    function runHeroAnimation(){
+      if (heroAnimationStarted) return;
+      if (prefersReducedMotion || !window.anime) return;
+      heroAnimationStarted = true;
+
+      anime.set('.anim-line', { opacity: 0, translateY: 14 });
+      anime.set('.phone-digits', { width: '0ch' });
+      anime.set('.whatsapp-action, .print-action, .paid-action', { opacity: 0, translateY: 8 });
+      anime.set('.receipt-output', { opacity: 0, translateY: -34, scale: .98 });
+      anime.set('.barcode-sticker', { opacity: 0, translateY: 24, rotate: -7, scale: .96 });
+      anime.set('.scan-light', { opacity: 0, translateY: -36 });
+
+      anime.timeline({
+        easing: 'easeOutCubic'
+      })
+      .add({
+        targets: '.billing-window',
+        translateY: [-8, 0],
+        opacity: [0, 1],
+        duration: 850
+      })
+      .add({
+        targets: '.anim-line',
+        opacity: [0, 1],
+        translateY: [14, 0],
+        delay: anime.stagger(260),
+        duration: 620
+      }, '-=240')
+      .add({
+        targets: '.phone-digits',
+        width: ['0ch', '15ch'],
+        duration: 950,
+        easing: 'steps(15)'
+      }, '-=80')
+      .add({
+        targets: '.whatsapp-action',
+        opacity: [0, 1],
+        translateY: [8, 0],
+        scale: [1, 1.04, 1],
+        duration: 640
+      })
+      .add({
+        targets: '.print-action',
+        opacity: [0, 1],
+        translateY: [8, 0],
+        duration: 520
+      }, '-=260')
+      .add({
+        targets: '.receipt-output',
+        opacity: [0, 1],
+        translateY: [-34, 0],
+        scale: [.98, 1],
+        duration: 760
+      }, '-=180')
+      .add({
+        targets: '.barcode-sticker',
+        opacity: [0, 1],
+        translateY: [24, 0],
+        rotate: [-7, -4],
+        scale: [.96, 1],
+        duration: 720
+      }, '-=380')
+      .add({
+        targets: '.scan-light',
+        opacity: [0, 1, 0],
+        translateY: [-36, 34],
+        duration: 950,
+        easing: 'easeInOutSine'
+      }, '-=160')
+      .add({
+        targets: '.paid-action',
+        opacity: [0, 1],
+        translateY: [8, 0],
+        duration: 520
+      }, '-=320');
+
+      anime({
+        targets: '.story-stage',
+        translateY: [0, -5, 0],
+        duration: 4200,
+        delay: 3200,
+        loop: true,
+        easing: 'easeInOutSine'
+      });
+    }
+
+    function initHeroAnimation(){
+      const stage = document.querySelector('.story-stage');
+      if (prefersReducedMotion || !window.anime || !stage) return;
+
+      const rect = stage.getBoundingClientRect();
+      const isInOpeningViewport = rect.top < window.innerHeight * .82 && rect.bottom > 0;
+      if (isInOpeningViewport || !('IntersectionObserver' in window)) {
+        runHeroAnimation();
+        return;
       }
-    });
 
-    window.addEventListener('resize', () => {
-      if (window.matchMedia('(min-width: 1024px)').matches && overlay.classList.contains('active')) {
-        closeMenu();
-      }
-    });
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          runHeroAnimation();
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: .22, rootMargin: '0px 0px -12% 0px' });
+
+      observer.observe(stage);
+    }
+
+    if (!prefersReducedMotion && window.anime) {
+      document.body.classList.add('motion-ready');
+    }
+
+    renderDesktopDownloads();
+    initMenu();
+    initReveal();
+    initHeroAnimation();
+    if (window.lucide) lucide.createIcons();
   </script>
 </body>
 </html>
